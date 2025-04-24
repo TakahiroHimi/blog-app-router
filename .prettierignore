@@ -1,0 +1,28 @@
+# ビルド関連
+.next/
+out/
+build/
+dist/
+
+# 依存関係
+node_modules/
+
+# 様々なログファイル
+*.log
+
+# ロックファイル
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# 他のツールの設定ファイル
+.eslintcache
+
+# その他
+.DS_Store
+.env*
+!.env.example
+
+# VSCode
+.vscode/*
+!.vscode/settings.json 
