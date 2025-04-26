@@ -4,6 +4,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import rehypePrettyCode from 'rehype-pretty-code'
+import Script from 'next/script'
 
 type PageParams = {
   params: {
@@ -40,9 +41,28 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     }
   }
   
+  const url = `https://tech-blog.example.com/posts/${year}/${month}/${slug}`
+  
+  // TODO：内容を修正
   return {
     title: `${post.meta.title} | Tech Blog`,
     description: post.meta.description,
+    openGraph: {
+      title: post.meta.title,
+      description: post.meta.description,
+      type: 'article',
+      publishedTime: post.meta.date,
+      url,
+      tags: post.meta.tags,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.meta.title,
+      description: post.meta.description,
+    },
+    alternates: {
+      canonical: url,
+    },
   }
 }
 
@@ -63,9 +83,42 @@ export default async function PostPage({ params }: PageParams) {
   const recentPosts = getRecentPosts(3).filter(p => 
     !(p.year === year && p.month === month && p.slug === slug)
   )
+  
+  const postUrl = `https://tech-blog.example.com/posts/${year}/${month}/${slug}`
 
   return (
     <div className="max-w-3xl mx-auto">
+      {/* TODO：内容を修正 */}
+      <Script
+        id="article-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": meta.title,
+            "description": meta.description,
+            "datePublished": meta.date,
+            "author": {
+              "@type": "Person",
+              "name": "Tech Blog Author"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Tech Blog",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://tech-blog.example.com/logo.png"
+              }
+            },
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": postUrl
+            },
+            "keywords": meta.tags.join(", ")
+          })
+        }}
+      />
       <article className="prose prose-lg prose-headings:font-semibold prose-a:text-blue-600 max-w-none">
         <header className="not-prose mb-8">
           <h1 className="text-3xl font-bold mb-3">{meta.title}</h1>

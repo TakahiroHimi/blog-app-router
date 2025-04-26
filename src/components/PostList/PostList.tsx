@@ -10,6 +10,7 @@ export function PostList({ posts }: PostListProps) {
     return (
       <div className="py-8 text-center">
         <h2 className="text-2xl font-semibold mb-4">記事はまだありません</h2>
+        {/* TODO：内容を修正 */}
         <p className="text-gray-600">
           これからWebフロントエンドやアクセシビリティに関する記事を投稿していきます。
         </p>

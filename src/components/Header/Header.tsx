@@ -5,6 +5,7 @@ export function Header() {
     <header className="py-4 border-b border-gray-200 relative">
       <div className="container mx-auto px-4 flex justify-between items-center">
         <div className="flex items-center">
+          {/* TODO：内容を修正 */}
           <Link href="/" className="text-2xl font-bold">
             Tech Blog
           </Link>

@@ -25,6 +25,27 @@ const notoSansJP = Noto_Sans_JP({
 export const metadata: Metadata = {
   title: 'Tech Blog - 技術的な学びを共有するブログ',
   description: 'Webフロントエンドやアクセシビリティに関する技術的な学びを共有するブログです',
+  // TODO：内容を修正
+  openGraph: {
+    title: 'Tech Blog - 技術的な学びを共有するブログ',
+    description: 'Webフロントエンドやアクセシビリティに関する技術的な学びを共有するブログです',
+    url: 'https://tech-blog.example.com',
+    siteName: 'Tech Blog',
+    locale: 'ja_JP',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Tech Blog - 技術的な学びを共有するブログ',
+    description: 'Webフロントエンドやアクセシビリティに関する技術的な学びを共有するブログです',
+  },
+  alternates: {
+    canonical: 'https://tech-blog.example.com',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 export default function RootLayout({
