@@ -1,0 +1,141 @@
+/* eslint-disable @next/next/no-img-element */
+import * as cheerio from 'cheerio';
+
+interface LinkCardProps {
+  url: string;
+}
+
+async function fetchLinkData(url: string) {
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (compatible; LinkCardBot/1.0; +https://example.com/bot)',
+      },
+      next: { revalidate: 60 * 60 * 24 }, // 1日のキャッシュ
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch URL: ${response.status}`);
+    }
+
+    const html = await response.text();
+    const $ = cheerio.load(html);
+
+    // メタデータの取得
+    const title = $('meta[property="og:title"]').attr('content') ||
+                 $('title').text() ||
+                 '';
+    
+    const description = $('meta[property="og:description"]').attr('content') ||
+                       $('meta[name="description"]').attr('content') ||
+                       '';
+    
+    let ogImage = $('meta[property="og:image"]').attr('content') ||
+                 '';
+    
+    const siteName = $('meta[property="og:site_name"]').attr('content') ||
+                    '';
+
+    // ファビコンの取得
+    let favicon = $('link[rel="icon"]').attr('href') ||
+                 $('link[rel="shortcut icon"]').attr('href') ||
+                 $('link[rel="apple-touch-icon"]').attr('href') ||
+                 '/favicon.ico';
+
+    // ベースURLの取得
+    const baseUrl = new URL(url);
+    
+    // ogImageのURLを絶対URLに変換
+    if (ogImage && !ogImage.startsWith('http')) {
+      try {
+        ogImage = ogImage.startsWith('/')
+          ? `${baseUrl.protocol}//${baseUrl.host}${ogImage}`
+          : `${baseUrl.protocol}//${baseUrl.host}/${ogImage}`;
+      } catch (error) {
+        console.error('Error parsing ogImage URL:', error);
+        ogImage = '';
+      }
+    }
+
+    // ファビコンのURLを絶対URLに変換
+    if (favicon && !favicon.startsWith('http')) {
+      try {
+        favicon = favicon.startsWith('/')
+          ? `${baseUrl.protocol}//${baseUrl.host}${favicon}`
+          : `${baseUrl.protocol}//${baseUrl.host}/${favicon}`;
+      } catch (error) {
+        console.error('Error parsing favicon URL:', error);
+        favicon = '';
+      }
+    }
+
+    return {
+      title,
+      description,
+      ogImage,
+      favicon,
+      siteName,
+      url,
+    };
+  } catch (error) {
+    console.error('Error fetching link data:', error);
+    return {
+      title: url,
+      description: '',
+      ogImage: '',
+      favicon: '',
+      siteName: '',
+      url,
+    };
+  }
+}
+
+export async function LinkCard({ url }: LinkCardProps) {
+  const linkData = await fetchLinkData(url);
+  const { title, description, ogImage, favicon, siteName } = linkData;
+  
+  // URLからホスト名を抽出
+  const hostname = new URL(url).hostname;
+
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="not-prose block no-underline mb-6 border border-gray-200 rounded-md overflow-hidden hover:shadow-md transition-shadow"
+    >
+      <div className="flex flex-col md:flex-row">
+        {ogImage && (
+          <div className="w-full md:w-1/3 h-48 md:h-auto relative">
+            <img
+              src={ogImage}
+              alt={title}
+              className="object-cover w-full h-full"
+            />
+          </div>
+        )}
+        <div className="p-4 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 className="text-lg font-medium text-gray-900 line-clamp-1 mb-2">{title}</h3>
+            {description && (
+              <p className="text-sm text-gray-600 line-clamp-2 mb-3">{description}</p>
+            )}
+          </div>
+          <div className="flex items-center mt-2">
+            {favicon && (
+              <div className="mr-2 w-4 h-4">
+                <img
+                  src={favicon}
+                  alt={hostname}
+                  className="w-4 h-4 object-contain"
+                />
+              </div>
+            )}
+            <span className="text-xs text-gray-500">{siteName || hostname}</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  );
+} 

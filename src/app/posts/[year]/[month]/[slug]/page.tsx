@@ -5,6 +5,22 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import rehypePrettyCode from 'rehype-pretty-code'
 import Script from 'next/script'
+import { LinkCard } from '@/components/LinkCard/LinkCard'
+
+const components = {
+  // カード用のカスタムコンポーネント
+  LinkCard: ({ children }: { children: { props: { children: string } } }) => {
+
+    const url = children.props.children.trim();
+
+    // childrenが文字列でURLの場合
+    if (typeof url === 'string' && url.trim().startsWith('http')) {
+      return <LinkCard url={url} />;
+    }
+    // それ以外の場合はそのまま表示
+    return <div className="border p-4 rounded-md">{url}</div>;
+  }
+}
 
 type PageParams = {
   params: {
@@ -203,6 +219,7 @@ export default async function PostPage({ params }: PageParams) {
                 ]
               }
             }}
+            components={components}
           />
         </div>
       </article>
