@@ -12,37 +12,6 @@ type PageParams = {
   }
 }
 
-// MDXコンポーネントの定義
-const components = {
-  h1: ({ children }: { children: React.ReactNode }) => (
-    <h1 className="text-3xl font-bold mt-8 mb-4">{children}</h1>
-  ),
-  h2: ({ children }: { children: React.ReactNode }) => (
-    <h2 className="text-2xl font-semibold mt-6 mb-3">{children}</h2>
-  ),
-  h3: ({ children }: { children: React.ReactNode }) => (
-    <h3 className="text-xl font-medium mt-4 mb-2">{children}</h3>
-  ),
-  p: ({ children }: { children: React.ReactNode }) => (
-    <p className="my-4">{children}</p>
-  ),
-  ul: ({ children }: { children: React.ReactNode }) => (
-    <ul className="list-disc pl-6 my-4">{children}</ul>
-  ),
-  ol: ({ children }: { children: React.ReactNode }) => (
-    <ol className="list-decimal pl-6 my-4">{children}</ol>
-  ),
-  li: ({ children }: { children: React.ReactNode }) => (
-    <li className="mb-1">{children}</li>
-  ),
-  code: ({ children }: { children: React.ReactNode }) => (
-    <code className="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono">{children}</code>
-  ),
-  pre: ({ children }: { children: React.ReactNode }) => (
-    <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto my-4 text-sm font-mono">{children}</pre>
-  ),
-}
-
 // 静的ページの生成に必要なパラメータを提供
 export async function generateStaticParams() {
   const posts = getAllPosts()
@@ -131,7 +100,7 @@ export default async function PostPage({ params }: PageParams) {
         </header>
         
         <div className="prose prose-lg prose-headings:font-semibold prose-a:text-blue-600 max-w-none">
-          <MDXRemote source={content} components={components} />
+          <MDXRemote source={content} />
         </div>
       </article>
       
