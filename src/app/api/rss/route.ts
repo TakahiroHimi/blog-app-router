@@ -8,7 +8,7 @@ export async function GET() {
   
   // RSSフィードのXMLを構築
   const xml = `<?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
   <title>Tech Blog</title>
   <link>${baseUrl}</link>
@@ -20,7 +20,9 @@ export async function GET() {
     .slice(0, 20) // 最新20件の記事を表示
     .map((post) => {
       const url = `${baseUrl}/posts/${post.year}/${post.month}/${post.slug}`
-      const pubDate = new Date(post.date).toUTCString()
+      const pubDate = new Date(post.createdAt).toUTCString()
+      // 更新日があれば設定
+      const updatedDate = post.updatedAt ? new Date(post.updatedAt).toUTCString() : null
       
       return `
   <item>
@@ -29,6 +31,8 @@ export async function GET() {
     <guid isPermaLink="true">${url}</guid>
     <description><![CDATA[${post.description}]]></description>
     <pubDate>${pubDate}</pubDate>
+    ${updatedDate ? `<dc:date>${updatedDate}</dc:date>` : ''}
+    ${post.tags.map(tag => `<category>${tag}</category>`).join('')}
   </item>`
     })
     .join('')}

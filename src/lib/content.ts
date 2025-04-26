@@ -6,7 +6,8 @@ import matter from 'gray-matter'
 export type PostMeta = {
   title: string
   description: string
-  date: string
+  createdAt: string
+  updatedAt?: string
   tags: string[]
   published: boolean
   slug: string
@@ -60,8 +61,8 @@ export function getPostsByYearAndMonth(year: string, month: string): PostMeta[] 
     } as PostMeta
   }).filter(Boolean) as PostMeta[] // nullを除外
 
-  // 日付で降順にソート
-  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  // 日付で降順にソート（作成日基準）
+  return posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 }
 
 /**
@@ -93,8 +94,8 @@ export function getAllPosts(): PostMeta[] {
   // 公開フラグがtrueの記事のみをフィルター
   const publishedPosts = allPosts.filter(post => post.published)
   
-  // 日付で降順にソート
-  return publishedPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  // 日付で降順にソート（作成日基準）
+  return publishedPosts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 }
 
 /**

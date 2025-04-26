@@ -48,7 +48,10 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   
   // OG画像のURLパラメータを設定
   ogImageUrl.searchParams.append('title', post.meta.title)
-  ogImageUrl.searchParams.append('date', post.meta.date)
+  ogImageUrl.searchParams.append('date', post.meta.createdAt)
+  
+  // 更新日がない場合は作成日を使用
+  const updatedAt = post.meta.updatedAt || post.meta.createdAt
   
   // TODO：内容を修正
   return {
@@ -58,7 +61,8 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
       title: post.meta.title,
       description: post.meta.description,
       type: 'article',
-      publishedTime: post.meta.date,
+      publishedTime: post.meta.createdAt,
+      modifiedTime: updatedAt,
       url,
       tags: post.meta.tags,
       images: [
@@ -102,6 +106,12 @@ export default async function PostPage({ params }: PageParams) {
   
   const postUrl = `https://tech-blog.example.com/posts/${year}/${month}/${slug}`
 
+  // 更新日がない場合は作成日を使用
+  const updatedAt = meta.updatedAt || meta.createdAt
+  
+  // 作成日と更新日が異なる場合は更新日も表示
+  const showUpdatedDate = updatedAt !== meta.createdAt
+
   return (
     <div className="max-w-3xl mx-auto">
       {/* TODO：内容を修正 */}
@@ -114,7 +124,8 @@ export default async function PostPage({ params }: PageParams) {
             "@type": "BlogPosting",
             "headline": meta.title,
             "description": meta.description,
-            "datePublished": meta.date,
+            "datePublished": meta.createdAt,
+            "dateModified": updatedAt,
             "author": {
               "@type": "Person",
               "name": "Tech Blog Author"
@@ -139,18 +150,35 @@ export default async function PostPage({ params }: PageParams) {
         <header className="not-prose mb-8">
           <h1 className="text-3xl font-bold mb-3">{meta.title}</h1>
           <div className="flex flex-wrap items-center text-sm text-gray-600 mb-3 gap-x-4">
-            <time dateTime={meta.date} className="flex items-center">
+            <time dateTime={meta.createdAt} className="flex items-center">
               <span className="mr-1">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </span>
-              {new Date(meta.date).toLocaleDateString('ja-JP', {
+              <span className="mr-1">投稿日:</span>
+              {new Date(meta.createdAt).toLocaleDateString('ja-JP', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
               })}
             </time>
+            
+            {showUpdatedDate && (
+              <time dateTime={updatedAt} className="flex items-center">
+                <span className="mr-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </span>
+                <span className="mr-1">更新日:</span>
+                {new Date(updatedAt).toLocaleDateString('ja-JP', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </time>
+            )}
           </div>
           
           <div className="flex flex-wrap gap-2 mb-4">
@@ -197,8 +225,8 @@ export default async function PostPage({ params }: PageParams) {
                   <p className="text-sm text-gray-600 line-clamp-2 mb-2">
                     {post.description}
                   </p>
-                  <time dateTime={post.date} className="text-xs text-gray-500">
-                    {new Date(post.date).toLocaleDateString('ja-JP')}
+                  <time dateTime={post.createdAt} className="text-xs text-gray-500">
+                    {new Date(post.createdAt).toLocaleDateString('ja-JP')}
                   </time>
                 </Link>
               </div>

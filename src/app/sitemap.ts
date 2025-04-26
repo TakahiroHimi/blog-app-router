@@ -43,10 +43,15 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
   const end = start + POSTS_PER_SITEMAP
   const sitePosts = posts.slice(start, end)
   
-  return sitePosts.map((post) => ({
-    url: `${BASE_URL}/posts/${post.year}/${post.month}/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }))
+  return sitePosts.map((post) => {
+    // 更新日がない場合は作成日を使用
+    const lastModifiedDate = post.updatedAt || post.createdAt
+    
+    return {
+      url: `${BASE_URL}/posts/${post.year}/${post.month}/${post.slug}`,
+      lastModified: new Date(lastModifiedDate),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }
+  })
 } 

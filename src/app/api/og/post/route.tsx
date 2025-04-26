@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
     // URLパラメータを取得
     const title = searchParams.get('title')
     const date = searchParams.get('date')
+    const isUpdated = searchParams.get('isUpdated') === 'true'
     
     // パラメータが無い場合はエラー
     if (!title) {
@@ -63,7 +64,7 @@ export async function GET(request: NextRequest) {
               marginTop: 20,
               fontWeight: 'normal'
             }}>
-              {formattedDate}
+              {isUpdated ? '更新日: ' : '投稿日: '}{formattedDate}
             </div>
           )}
           
