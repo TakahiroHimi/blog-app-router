@@ -3,6 +3,7 @@ import { getAllPosts, getPostBySlug, getRecentPosts } from '@/lib/content'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import rehypePrettyCode from 'rehype-pretty-code'
 
 type PageParams = {
   params: {
@@ -100,7 +101,16 @@ export default async function PostPage({ params }: PageParams) {
         </header>
         
         <div className="prose prose-lg prose-headings:font-semibold prose-a:text-blue-600 max-w-none">
-          <MDXRemote source={content} />
+          <MDXRemote 
+            source={content} 
+            options={{
+              mdxOptions: {
+                rehypePlugins: [
+                  [rehypePrettyCode, { theme: 'dark-plus' }]
+                ]
+              }
+            }}
+          />
         </div>
       </article>
       
