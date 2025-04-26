@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { Noto_Sans_JP } from 'next/font/google'
 import { Header } from '@/components/Header/Header'
 import { Footer } from '@/components/Footer/Footer'
+import Script from 'next/script'
 import './globals.css'
 
 const geistSans = Geist({
@@ -21,6 +22,9 @@ const notoSansJP = Noto_Sans_JP({
   weight: ['400', '500', '700'],
   preload: false,
 })
+
+// GA4の測定ID（実際の値に置き換える）
+const GA_MEASUREMENT_ID = 'G-WFFESS2BGN'
 
 export const metadata: Metadata = {
   title: 'Tech Blog - 技術的な学びを共有するブログ',
@@ -53,6 +57,9 @@ export const metadata: Metadata = {
   alternates: {
     // TODO：内容を修正
     canonical: 'https://tech-blog.example.com',
+    types: {
+      'application/rss+xml': 'https://tech-blog.example.com/api/rss',
+    },
   },
   robots: {
     index: true,
@@ -70,6 +77,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${notoSansJP.variable} font-sans antialiased min-h-screen flex flex-col bg-white text-gray-900`}
       >
+        {/* Google Analytics */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
+        
         <Header />
         <main className="flex-grow container mx-auto px-4 py-8">{children}</main>
         <Footer />
