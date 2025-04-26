@@ -27,38 +27,34 @@ const notoSansJP = Noto_Sans_JP({
 const GA_MEASUREMENT_ID = 'G-WFFESS2BGN'
 
 export const metadata: Metadata = {
-  title: 'Tech Blog - 技術的な学びを共有するブログ',
-  description: 'Webフロントエンドやアクセシビリティに関する技術的な学びを共有するブログです',
-  // TODO：内容を修正
+  title: 'himi.blog',
+  description: 'himi.blog',
   openGraph: {
-    title: 'Tech Blog - 技術的な学びを共有するブログ',
-    description: 'Webフロントエンドやアクセシビリティに関する技術的な学びを共有するブログです',
-    url: 'https://tech-blog.example.com',
-    siteName: 'Tech Blog',
+    title: 'himi.blog',
+    description: 'himi.blog',
+    url: 'https://himi.blog',
+    siteName: 'himi.blog',
     locale: 'ja_JP',
     type: 'website',
-    // TODO：内容を修正
     images: [
       {
-        url: 'https://tech-blog.example.com/api/og',
+        url: 'https://himi.blog/api/og',
         width: 1200,
         height: 630,
-        alt: 'Tech Blog',
+        alt: 'himi.blog',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tech Blog - 技術的な学びを共有するブログ',
-    description: 'Webフロントエンドやアクセシビリティに関する技術的な学びを共有するブログです',
-    // TODO：内容を修正
-    images: ['https://tech-blog.example.com/api/og'],
+    title: 'himi.blog',
+    description: 'himi.blog',
+    images: ['https://himi.blog/api/og'],
   },
   alternates: {
-    // TODO：内容を修正
-    canonical: 'https://tech-blog.example.com',
+    canonical: 'https://himi.blog',
     types: {
-      'application/rss+xml': 'https://tech-blog.example.com/api/rss',
+      'application/rss+xml': 'https://himi.blog/api/rss',
     },
   },
   robots: {

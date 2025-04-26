@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
             display: 'flex',
             alignItems: 'center',
           }}>
-            <div style={{ marginRight: 10 }}>Tech Blog</div>
+            <div style={{ marginRight: 10 }}>himi.blog</div>
           </div>
         </div>
       ),

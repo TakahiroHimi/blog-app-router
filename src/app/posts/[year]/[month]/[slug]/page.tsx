@@ -57,10 +57,9 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     }
   }
   
-  const url = `https://tech-blog.example.com/posts/${year}/${month}/${slug}`
+  const url = `https://himi.blog/posts/${year}/${month}/${slug}`
 
-  // TODO：内容を修正
-  const ogImageUrl = new URL(`/api/og/post`, 'https://tech-blog.example.com')
+  const ogImageUrl = new URL(`/api/og/post`, 'https://himi.blog')
   
   // OG画像のURLパラメータを設定
   ogImageUrl.searchParams.append('title', post.meta.title)
@@ -69,9 +68,8 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   // 更新日がない場合は作成日を使用
   const updatedAt = post.meta.updatedAt || post.meta.createdAt
   
-  // TODO：内容を修正
   return {
-    title: `${post.meta.title} | Tech Blog`,
+    title: `${post.meta.title} | himi.blog`,
     description: post.description,
     openGraph: {
       title: post.meta.title,
@@ -120,7 +118,7 @@ export default async function PostPage({ params }: PageParams) {
     !(p.year === year && p.month === month && p.slug === slug)
   )
   
-  const postUrl = `https://tech-blog.example.com/posts/${year}/${month}/${slug}`
+  const postUrl = `https://himi.blog/posts/${year}/${month}/${slug}`
 
   // 更新日がない場合は作成日を使用
   const updatedAt = meta.updatedAt || meta.createdAt
@@ -130,7 +128,6 @@ export default async function PostPage({ params }: PageParams) {
 
   return (
     <div className="max-w-3xl mx-auto">
-      {/* TODO：内容を修正 */}
       <Script
         id="article-structured-data"
         type="application/ld+json"
@@ -144,14 +141,14 @@ export default async function PostPage({ params }: PageParams) {
             "dateModified": updatedAt,
             "author": {
               "@type": "Person",
-              "name": "Tech Blog Author"
+              "name": "himi.blog Author"
             },
             "publisher": {
               "@type": "Organization",
-              "name": "Tech Blog",
+              "name": "himi.blog",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://tech-blog.example.com/logo.png"
+                "url": "https://himi.blog/logo.png"
               }
             },
             "mainEntityOfPage": {

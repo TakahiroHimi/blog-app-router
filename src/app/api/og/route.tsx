@@ -21,10 +21,7 @@ export async function GET() {
           flexDirection: 'column',
         }}
       >
-        <div style={{ fontSize: 90, fontWeight: 'bold', marginBottom: 20 }}>Tech Blog</div>
-        <div style={{ fontSize: 40, opacity: 0.8 }}>
-          Webフロントエンドやアクセシビリティに関する技術的な学びを共有するブログです
-        </div>
+        <div style={{ fontSize: 90, fontWeight: 'bold', marginBottom: 20 }}>himi.blog</div>
       </div>
     ),
     {

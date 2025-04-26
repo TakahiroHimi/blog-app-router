@@ -1,12 +1,6 @@
 import { getAllPosts, getPostBySlug } from '@/lib/content'
 import { PostList } from '@/components/PostList/PostList'
-import type { Metadata } from 'next'
 import Script from 'next/script'
-
-export const metadata: Metadata = {
-  title: 'Tech Blog - 技術的な学びを共有するブログ',
-  description: 'Webフロントエンドやアクセシビリティに関する技術的な学びを共有するブログです',
-}
 
 export default function Home() {
   // すべての記事を取得
@@ -31,18 +25,15 @@ export default function Home() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebSite",
-            "name": "Tech Blog",
-            "description": "Webフロントエンドやアクセシビリティに関する技術的な学びを共有するブログです",
-            "url": "https://tech-blog.example.com",
+            "name": "himi.blog",
+            "description": "himi.blog",
+            "url": "https://himi.blog",
           })
         }}
       />
       <div className="mb-8 text-center">
         {/* TODO：内容を修正 */}
-        <h1 className="text-4xl font-bold mb-4">Tech Blog</h1>
-        <p className="text-xl text-gray-700">
-          Webフロントエンドやアクセシビリティに関する技術的な学びを共有するブログです
-        </p>
+        <h1 className="text-4xl font-bold mb-4">himi.blog</h1>
       </div>
       <PostList posts={postsWithDescription} />
     </div>

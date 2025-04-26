@@ -1,18 +1,17 @@
 import { getAllPosts, getPostBySlug } from '@/lib/content'
 import { NextResponse } from 'next/server'
 
-// TODO：内容を修正
 export async function GET() {
   const posts = getAllPosts()
-  const baseUrl = 'https://tech-blog.example.com'
+  const baseUrl = 'https://himi.blog'
   
   // RSSフィードのXMLを構築
   const xml = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
-  <title>Tech Blog</title>
+  <title>himi.blog</title>
   <link>${baseUrl}</link>
-  <description>Webフロントエンドやアクセシビリティに関する技術的な学びを共有するブログです</description>
+  <description>himi.blog</description>
   <language>ja</language>
   <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
   <atom:link href="${baseUrl}/api/rss" rel="self" type="application/rss+xml" />

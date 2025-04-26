@@ -1,8 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/content'
 
-// TODO：内容を修正
-const BASE_URL = 'https://tech-blog.example.com'
+const BASE_URL = 'https://himi.blog'
 const POSTS_PER_SITEMAP = 100 // 1サイトマップあたりの記事数
 
 // サイトマップIDを生成

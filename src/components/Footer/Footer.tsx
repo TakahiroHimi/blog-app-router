@@ -6,11 +6,9 @@ export function Footer() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
-            {/* TODO：内容を修正 */}
             <Link href="/" className="text-lg font-medium">
-              Tech Blog
+              himi.blog
             </Link>
-            <p className="text-sm text-gray-600">技術的な学びを共有するブログ</p>
           </div>
 
           <div className="flex items-center">
@@ -29,8 +27,7 @@ export function Footer() {
         </div>
 
         <div className="mt-6 text-center text-sm text-gray-600">
-          {/* TODO：内容を修正 */}
-          © {new Date().getFullYear()} Tech Blog. All rights reserved.
+          © {new Date().getFullYear()} himi.blog. All rights reserved.
         </div>
       </div>
     </footer>
