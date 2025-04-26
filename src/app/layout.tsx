@@ -33,13 +33,25 @@ export const metadata: Metadata = {
     siteName: 'Tech Blog',
     locale: 'ja_JP',
     type: 'website',
+    // TODO：内容を修正
+    images: [
+      {
+        url: 'https://tech-blog.example.com/api/og',
+        width: 1200,
+        height: 630,
+        alt: 'Tech Blog',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Tech Blog - 技術的な学びを共有するブログ',
     description: 'Webフロントエンドやアクセシビリティに関する技術的な学びを共有するブログです',
+    // TODO：内容を修正
+    images: ['https://tech-blog.example.com/api/og'],
   },
   alternates: {
+    // TODO：内容を修正
     canonical: 'https://tech-blog.example.com',
   },
   robots: {

@@ -42,6 +42,13 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   }
   
   const url = `https://tech-blog.example.com/posts/${year}/${month}/${slug}`
+
+  // TODO：内容を修正
+  const ogImageUrl = new URL(`/api/og/post`, 'https://tech-blog.example.com')
+  
+  // OG画像のURLパラメータを設定
+  ogImageUrl.searchParams.append('title', post.meta.title)
+  ogImageUrl.searchParams.append('date', post.meta.date)
   
   // TODO：内容を修正
   return {
@@ -54,11 +61,20 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
       publishedTime: post.meta.date,
       url,
       tags: post.meta.tags,
+      images: [
+        {
+          url: ogImageUrl.toString(),
+          width: 1200,
+          height: 630,
+          alt: post.meta.title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.meta.title,
       description: post.meta.description,
+      images: [ogImageUrl.toString()],
     },
     alternates: {
       canonical: url,
