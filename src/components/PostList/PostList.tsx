@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { PostMeta } from '@/lib/content'
 
 type PostListProps = {
-  posts: PostMeta[]
+  posts: Array<PostMeta & { description: string }>
 }
 
 export function PostList({ posts }: PostListProps) {

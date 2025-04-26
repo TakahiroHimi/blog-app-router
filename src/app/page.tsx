@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/lib/content'
+import { getAllPosts, getPostBySlug } from '@/lib/content'
 import { PostList } from '@/components/PostList/PostList'
 import type { Metadata } from 'next'
 import Script from 'next/script'
@@ -9,7 +9,17 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
+  // すべての記事を取得
   const posts = getAllPosts()
+  
+  // 各記事に記事の冒頭から自動生成した説明文を追加
+  const postsWithDescription = posts.map(post => {
+    const fullPost = getPostBySlug(post.year, post.month, post.slug)
+    return {
+      ...post,
+      description: fullPost ? fullPost.description : ''
+    }
+  })
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -34,7 +44,7 @@ export default function Home() {
           Webフロントエンドやアクセシビリティに関する技術的な学びを共有するブログです
         </p>
       </div>
-      <PostList posts={posts} />
+      <PostList posts={postsWithDescription} />
     </div>
   )
 }

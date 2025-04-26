@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/lib/content'
+import { getAllPosts, getPostBySlug } from '@/lib/content'
 import { NextResponse } from 'next/server'
 
 // TODO：内容を修正
@@ -24,12 +24,15 @@ export async function GET() {
       // 更新日があれば設定
       const updatedDate = post.updatedAt ? new Date(post.updatedAt).toUTCString() : null
       
+      const postDetail = getPostBySlug(post.year, post.month, post.slug)
+      const description = postDetail ? postDetail.description : ''
+      
       return `
   <item>
     <title><![CDATA[${post.title}]]></title>
     <link>${url}</link>
     <guid isPermaLink="true">${url}</guid>
-    <description><![CDATA[${post.description}]]></description>
+    <description><![CDATA[${description}]]></description>
     <pubDate>${pubDate}</pubDate>
     ${updatedDate ? `<dc:date>${updatedDate}</dc:date>` : ''}
     ${post.tags.map(tag => `<category>${tag}</category>`).join('')}

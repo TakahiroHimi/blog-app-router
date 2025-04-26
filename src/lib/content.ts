@@ -5,7 +5,6 @@ import matter from 'gray-matter'
 // 記事のメタデータの型定義
 export type PostMeta = {
   title: string
-  description: string
   createdAt: string
   updatedAt?: string
   tags: string[]
@@ -18,6 +17,35 @@ export type PostMeta = {
 
 // ルートディレクトリのパス
 const postsDirectory = path.join(process.cwd(), 'posts')
+
+/**
+ * 記事の冒頭部分から適切な長さの説明文を生成する
+ */
+function generateDescription(content: string, maxLength: number = 160): string {
+  // HTMLタグとMarkdownリンクを削除
+  const plainText = content
+    .replace(/<[^>]+>/g, '') // HTMLタグを削除
+    .replace(/!\[.*?\]\(.*?\)/g, '') // 画像を削除
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1') // Markdownリンクをテキストのみに置換
+    .replace(/#+\s+/g, '') // 見出しの#を削除
+    .replace(/\n+/g, ' ') // 改行を空白に置換
+    .trim();
+
+  // 適切な長さで切り取る
+  if (plainText.length <= maxLength) {
+    return plainText;
+  }
+
+  // 最後の単語が途切れないように調整
+  let truncated = plainText.substring(0, maxLength);
+  const lastSpaceIndex = truncated.lastIndexOf(' ');
+  
+  if (lastSpaceIndex !== -1) {
+    truncated = truncated.substring(0, lastSpaceIndex);
+  }
+  
+  return truncated + '...';
+}
 
 /**
  * 指定した年と月のディレクトリからMDXファイルを読み込み、メタデータを返す
@@ -101,7 +129,7 @@ export function getAllPosts(): PostMeta[] {
 /**
  * 記事のスラッグから記事の詳細を取得
  */
-export function getPostBySlug(year: string, month: string, slug: string): { meta: PostMeta, content: string } | null {
+export function getPostBySlug(year: string, month: string, slug: string): { meta: PostMeta, content: string, description: string } | null {
   // 指定した年月ディレクトリ内のすべてのファイルを取得
   const yearMonthDirectory = path.join(postsDirectory, year, month)
   
@@ -136,14 +164,26 @@ export function getPostBySlug(year: string, month: string, slug: string): { meta
     month,
     day,
   } as PostMeta
+  
+  // 記事の冒頭から説明文を自動生成
+  const description = generateDescription(content)
 
-  return { meta, content }
+  return { meta, content, description }
 }
 
 /**
  * 最新の記事を指定した件数分取得
  */
-export function getRecentPosts(count: number = 3): PostMeta[] {
+export function getRecentPosts(count: number = 3): Array<PostMeta & { description: string }> {
   const posts = getAllPosts()
-  return posts.slice(0, count)
+  const recentPosts = posts.slice(0, count)
+  
+  // 各記事の説明文を取得
+  return recentPosts.map(post => {
+    const fullPost = getPostBySlug(post.year, post.month, post.slug)
+    return {
+      ...post,
+      description: fullPost ? fullPost.description : ''
+    }
+  })
 } 

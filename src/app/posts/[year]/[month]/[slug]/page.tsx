@@ -56,10 +56,10 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   // TODO：内容を修正
   return {
     title: `${post.meta.title} | Tech Blog`,
-    description: post.meta.description,
+    description: post.description,
     openGraph: {
       title: post.meta.title,
-      description: post.meta.description,
+      description: post.description,
       type: 'article',
       publishedTime: post.meta.createdAt,
       modifiedTime: updatedAt,
@@ -77,7 +77,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     twitter: {
       card: 'summary_large_image',
       title: post.meta.title,
-      description: post.meta.description,
+      description: post.description,
       images: [ogImageUrl.toString()],
     },
     alternates: {
@@ -99,7 +99,7 @@ export default async function PostPage({ params }: PageParams) {
     notFound()
   }
   
-  const { meta, content } = post
+  const { meta, content, description } = post
   const recentPosts = getRecentPosts(3).filter(p => 
     !(p.year === year && p.month === month && p.slug === slug)
   )
@@ -123,7 +123,7 @@ export default async function PostPage({ params }: PageParams) {
             "@context": "https://schema.org",
             "@type": "BlogPosting",
             "headline": meta.title,
-            "description": meta.description,
+            "description": description,
             "datePublished": meta.createdAt,
             "dateModified": updatedAt,
             "author": {
@@ -191,10 +191,6 @@ export default async function PostPage({ params }: PageParams) {
               </span>
             ))}
           </div>
-          
-          <p className="text-lg text-gray-600">
-            {meta.description}
-          </p>
         </header>
         
         <div className="prose prose-lg prose-headings:font-semibold prose-a:text-blue-600 max-w-none">
