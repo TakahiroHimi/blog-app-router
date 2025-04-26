@@ -1,0 +1,80 @@
+---
+title: 'TypeScriptの基本と実践的な型活用法'
+description: 'TypeScriptの基本概念から実践的な型活用法まで解説します。'
+date: '2024-06-15'
+tags: ['TypeScript', 'JavaScript', '型システム']
+published: true
+---
+
+# TypeScriptの基本と実践的な型活用法
+
+TypeScriptは、JavaScriptに静的型付けを追加した言語です。この記事では、TypeScriptの基本から実践的な型の活用法について解説します。
+
+## TypeScriptの利点
+
+- コード補完
+- 型チェックによるバグの早期発見
+- リファクタリングのしやすさ
+- ドキュメントとしての役割
+
+## 基本的な型
+
+TypeScriptでは、以下のような基本的な型があります。
+
+```typescript
+// プリミティブ型
+const name: string = '山田太郎';
+const age: number = 30;
+const isActive: boolean = true;
+
+// 配列
+const scores: number[] = [80, 90, 70];
+const names: Array<string> = ['山田', '田中', '佐藤'];
+
+// オブジェクト
+const user: { id: number; name: string } = {
+  id: 1,
+  name: '山田太郎'
+};
+
+// 関数の型
+function add(a: number, b: number): number {
+  return a + b;
+}
+```
+
+## インターフェースと型エイリアス
+
+複雑な型を定義するには、インターフェースや型エイリアスを使用します。
+
+```typescript
+// インターフェース
+interface User {
+  id: number;
+  name: string;
+  email?: string; // オプショナルプロパティ
+  readonly createdAt: Date; // 読み取り専用プロパティ
+}
+
+// 型エイリアス
+type Point = {
+  x: number;
+  y: number;
+};
+```
+
+## ジェネリクス
+
+ジェネリクスを使うと、様々な型で再利用可能なコンポーネントを作成できます。
+
+```typescript
+function identity<T>(arg: T): T {
+  return arg;
+}
+
+const result = identity<string>('Hello');
+```
+
+## 実践的な型活用例
+
+実際のプロジェクトでは、より複雑な型の組み合わせを使うことがあります。 

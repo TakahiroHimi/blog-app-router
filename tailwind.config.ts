@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import typography from '@tailwindcss/typography'
 
 const config: Config = {
   content: [
@@ -6,7 +7,6 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -14,7 +14,7 @@ const config: Config = {
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
       animation: {
-        fadeIn: 'fadeIn 0.2s ease-in-out',
+        'fadeIn': 'fadeIn 0.2s ease-in-out',
       },
       keyframes: {
         fadeIn: {
@@ -22,9 +22,24 @@ const config: Config = {
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            'code': {
+              fontWeight: '400',
+              backgroundColor: 'var(--tw-prose-pre-bg)',
+              padding: '0.25rem 0.4rem',
+              borderRadius: '0.25rem',
+              fontSize: '0.875em',
+            },
+          }
+        }
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    typography,
+  ],
 }
 
 export default config
