@@ -161,7 +161,7 @@ export default async function PostPage({ params }: PageParams) {
       />
       <article className="prose prose-lg prose-headings:font-semibold prose-a:text-blue-600 max-w-none">
         <header className="not-prose mb-8">
-          <h1 className="text-3xl font-bold mb-3">{meta.title}</h1>
+          <h1 className="text-3xl font-bold mb-3 text-gray-900">{meta.title}</h1>
           <div className="flex flex-wrap items-center text-sm text-gray-600 mb-3 gap-x-4">
             <time dateTime={meta.createdAt} className="flex items-center">
               <span className="mr-1">

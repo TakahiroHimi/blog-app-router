@@ -22,19 +22,6 @@ const config: Config = {
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
-      typography: {
-        DEFAULT: {
-          css: {
-            'code': {
-              fontWeight: '400',
-              backgroundColor: 'var(--tw-prose-pre-bg)',
-              padding: '0.25rem 0.4rem',
-              borderRadius: '0.25rem',
-              fontSize: '0.875em',
-            },
-          }
-        }
-      }
     },
   },
   plugins: [
