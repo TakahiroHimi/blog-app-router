@@ -6,6 +6,7 @@ import type { Metadata } from 'next'
 import rehypePrettyCode from 'rehype-pretty-code'
 import Script from 'next/script'
 import { LinkCard } from '@/components/LinkCard/LinkCard'
+import { CopyUrlButton } from '@/components/CopyUrlButton/CopyUrlButton'
 
 const components = {
   // カード用のカスタムコンポーネント
@@ -63,7 +64,6 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   
   // OG画像のURLパラメータを設定
   ogImageUrl.searchParams.append('title', post.meta.title)
-  ogImageUrl.searchParams.append('date', post.meta.createdAt)
   
   // 更新日がない場合は作成日を使用
   const updatedAt = post.meta.updatedAt || post.meta.createdAt
@@ -220,6 +220,23 @@ export default async function PostPage({ params }: PageParams) {
           />
         </div>
       </article>
+      
+      <div className="my-8 flex justify-center space-x-4">
+        <a
+          href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(`${meta.title} @himi_himi_`)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Xでシェア"
+          title="Xでシェア"
+          className="inline-flex items-center justify-center p-3 border border-gray-300 rounded-full shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+          </svg>
+        </a>
+        
+        <CopyUrlButton url={postUrl} />
+      </div>
       
       {recentPosts.length > 0 && (
         <div className="border-t border-gray-200 pt-8 mt-10">
