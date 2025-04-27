@@ -127,7 +127,7 @@ export default async function PostPage({ params }: PageParams) {
   const showUpdatedDate = updatedAt !== meta.createdAt
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-4xl mx-auto">
       <Script
         id="article-structured-data"
         type="application/ld+json"
