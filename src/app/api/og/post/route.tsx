@@ -6,86 +6,73 @@ export const runtime = 'edge'
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    
-    // URLパラメータを取得
+    // タイトルを取得
     const title = searchParams.get('title')
-    const date = searchParams.get('date')
-    const isUpdated = searchParams.get('isUpdated') === 'true'
-    
-    // パラメータが無い場合はエラー
     if (!title) {
       return new Response('Missing title parameter', { status: 400 })
     }
-    
-    // 日付のフォーマット
-    let formattedDate = ''
-    if (date) {
-      const dateObj = new Date(date)
-      formattedDate = dateObj.toLocaleDateString('ja-JP', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    }
 
     // OG画像を生成して返す
-    // TODO：内容を修正
     return new ImageResponse(
       (
         <div
           style={{
             display: 'flex',
-            fontSize: 60,
-            color: 'white',
-            background: 'linear-gradient(to bottom, #3b82f6, #1e3a8a)',
-            width: '100%',
-            height: '100%',
-            padding: '50px 80px',
-            flexDirection: 'column',
             justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            maxWidth: 1200,
+            height: '100%',
+            maxHeight: 630,
+            background: 'linear-gradient(to bottom right, #E6E6E6 0%, #F3F4F6 50%, #D1D5DB 100%)',
           }}
         >
-          <div style={{ 
-            fontSize: 70, 
-            fontWeight: 'bold', 
-            marginBottom: 20,
-            display: 'flex',
-            flexWrap: 'wrap',
-            wordBreak: 'break-word',
-            lineHeight: 1.2,
-          }}>
-            {title}
-          </div>
-          
-          {date && (
-            <div style={{ 
-              fontSize: 36, 
-              opacity: 0.8,
-              marginTop: 20,
-              fontWeight: 'normal'
-            }}>
-              {isUpdated ? '更新日: ' : '投稿日: '}{formattedDate}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              background: 'white',
+              padding: '60px',
+              borderRadius: 24,
+              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+              width: '90%',
+              height: '90%',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                fontSize: 64,
+                fontWeight: 'bold',
+                color: '#111827',
+                lineHeight: 1.4,
+                wordBreak: 'break-word',
+                textAlign: 'left',
+              }}
+            >
+              {title}
             </div>
-          )}
-          
-          <div style={{ 
-            fontSize: 32, 
-            opacity: 0.8,
-            marginTop: 'auto',
-            display: 'flex',
-            alignItems: 'center',
-          }}>
-            <div style={{ marginRight: 10 }}>himi.blog</div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 16 }}>
+              <div style={{
+                width: 80,
+                height: 80,
+                backgroundImage: `url(https://himi.blog/profile_image_75_75.png)`,
+                borderRadius: 100,
+              }} />
+              <div style={{ fontSize: 32, color: '#6B7280' }}>himi.blog</div>
+            </div>
           </div>
         </div>
       ),
       {
         width: 1200,
         height: 630,
-      }
+      },
     )
   } catch (error) {
     console.error('OG Image generation error:', error)
     return new Response('Failed to generate OG image', { status: 500 })
   }
-} 
+}
