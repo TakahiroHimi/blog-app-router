@@ -7,19 +7,6 @@ published: true
 isTest: true
 ---
 
-export const metaData = {
-  title: 'アクセシビリティとVRTテスト用ページ',
-  createdAt: '2099-01-01',
-  updatedAt: '2099-01-02',
-  tags: ['テスト', 'アクセシビリティ', 'VRT'],
-  published: true,
-  isTest: true,
-}
-
-import { LinkCard } from '@/components/LinkCard/LinkCard'
-
----
-
 # アクセシビリティとVRTテスト用ページ
 
 このページはアクセシビリティテストおよびVisual Regression Testing (VRT)のために作成された特別なページです。一般ユーザーには表示されません。
@@ -40,7 +27,7 @@ import { LinkCard } from '@/components/LinkCard/LinkCard'
 
 **太字のテキスト**
 
-*イタリック体のテキスト*
+_イタリック体のテキスト_
 
 ~~取り消し線のテキスト~~
 
@@ -73,7 +60,7 @@ import { LinkCard } from '@/components/LinkCard/LinkCard'
 ## 引用
 
 > これは引用文です。
-> 
+>
 > 複数行にわたる引用も可能です。
 >
 > > ネストされた引用も可能です。
@@ -83,10 +70,10 @@ import { LinkCard } from '@/components/LinkCard/LinkCard'
 ```javascript
 // JavaScriptのコードブロック
 function hello() {
-  console.log("Hello, world!");
+  console.log('Hello, world!')
 }
 
-hello();
+hello()
 ```
 
 ```css
@@ -100,11 +87,11 @@ hello();
 
 ## 表
 
-| 名前 | 年齢 | 職業 |
-|------|------|------|
-| 山田太郎 | 30 | エンジニア |
-| 佐藤花子 | 25 | デザイナー |
-| 鈴木一郎 | 40 | マネージャー |
+| 名前     | 年齢 | 職業         |
+| -------- | ---- | ------------ |
+| 山田太郎 | 30   | エンジニア   |
+| 佐藤花子 | 25   | デザイナー   |
+| 鈴木一郎 | 40   | マネージャー |
 
 ## リンク
 
@@ -143,11 +130,11 @@ JavaScript
 
 LinkCardコンポーネントのテスト:
 
-<LinkCard url="https://zenn.dev/" />
+<LinkCard>https://zenn.dev/</LinkCard>
 
-<LinkCard url="https://nextjs.org/" />
+<LinkCard>https://nextjs.org/</LinkCard>
 
-<LinkCard url="https://zenn.dev/catnose99/articles/zenn-dev-stack" />
+<LinkCard>https://zenn.dev/catnose99/articles/zenn-dev-stack</LinkCard>
 
 ## 数式表現（テスト用）
 
@@ -175,14 +162,18 @@ LinkCardコンポーネントのテスト:
 
 <blockquote cite="https://example.com">
   <p>引用元が明示された引用文</p>
-  <footer>— <cite>出典者</cite></footer>
+  <footer>
+    — <cite>出典者</cite>
+  </footer>
 </blockquote>
 
 ## インタラクティブ要素
 
 <button>クリック可能なボタン（MDXの場合）</button>
 
-<div tabIndex="0" role="button">キーボードアクセス可能な要素</div>
+<div tabIndex="0" role="button">
+  キーボードアクセス可能な要素
+</div>
 
 <form>
   <label htmlFor="test-input">テスト入力:</label>
@@ -191,4 +182,4 @@ LinkCardコンポーネントのテスト:
 
 ---
 
-このテストページは環境変数によって本番環境では表示されないようになっています。 
+このテストページは環境変数によって本番環境では表示されないようになっています。

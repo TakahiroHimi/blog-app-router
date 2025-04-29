@@ -1,9 +1,14 @@
 import { notFound } from 'next/navigation'
-import { getAllPostsMeta, getPost, isFrontmatter } from '@/lib/content'
+import { getAllPostsMeta, getPost } from '@/lib/content'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import { CopyUrlButton } from '@/components/CopyUrlButton/CopyUrlButton'
+import { compile, run } from '@mdx-js/mdx'
+import * as runtime from 'react/jsx-runtime'
+import { LinkCard } from '@/components/LinkCard/LinkCard'
+import rehypePrettyCode from 'rehype-pretty-code'
+import remarkGfm from 'remark-gfm'
 
 type PageParams = {
   params: {
@@ -11,6 +16,19 @@ type PageParams = {
     month: string
     slug: string
   }
+}
+
+const components = {
+  LinkCard: ({ children }: { children: { props: { children: string } } }) => {
+    const url = children.props.children.trim()
+
+    // childrenが文字列でURLの場合
+    if (typeof url === 'string' && url.trim().startsWith('http')) {
+      return <LinkCard url={url} />
+    }
+    // それ以外の場合はそのまま表示
+    return <div className="border p-4 rounded-md">{url}</div>
+  },
 }
 
 // 静的ページの生成に必要なパラメータを提供
@@ -85,9 +103,9 @@ export default async function PostPage({ params }: PageParams) {
   const month = paramsData.month
   const slug = paramsData.slug
 
-  const { default: Post, metaData } = await import(`@/posts/${year}/${month}/${slug}.mdx`)
+  const post = getPost(year, month, slug)
 
-  if (!isFrontmatter(metaData)) {
+  if (!post) {
     notFound()
   }
 
@@ -95,7 +113,20 @@ export default async function PostPage({ params }: PageParams) {
     .slice(0, 3)
     .filter((p) => !(p.year === year && p.month === month && p.slug === slug))
 
+  const code = String(
+    await compile(post.content, {
+      outputFormat: 'function-body',
+      remarkPlugins: [[remarkGfm]],
+      rehypePlugins: [[rehypePrettyCode, { theme: 'dark-plus' }]],
+    }),
+  )
+  const { default: MDXContent } = await run(code, {
+    ...runtime,
+    baseUrl: import.meta.url,
+  })
+
   const postUrl = `https://himi.blog/posts/${year}/${month}/${slug}`
+  const metaData = post.meta
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -191,7 +222,7 @@ export default async function PostPage({ params }: PageParams) {
         </header>
 
         <div className="prose prose-lg prose-headings:font-semibold prose-a:text-blue-600 max-w-none prose-inline-code:before:hidden prose-inline-code:after:hidden prose-inline-code:bg-gray-100 prose-inline-code:rounded-md prose-inline-code:p-1 prose-inline-code:text-gray-700 test-code:bg-red-500">
-          <Post />
+          <MDXContent components={components} />
         </div>
       </article>
 

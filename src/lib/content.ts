@@ -22,7 +22,7 @@ type Frontmatter = {
 }
 
 /**
- * すべての記事のメタデータを取得
+ * すべての記事のメタデータを取得する
  */
 export function getAllPostsMeta(): PostMeta[] {
   // 年ディレクトリを全て取得
@@ -50,9 +50,9 @@ export function getAllPostsMeta(): PostMeta[] {
 }
 
 /**
- * 指定されたslugの記事のメタデータと記事コンテンツを取得
+ * 指定されたslugの記事のメタデータと記事コンテンツを取得する
  */
-export function getPost(year: string, month: string, slug: string): { meta: PostMeta, content: string } | undefined {
+export function getPost(year: string, month: string, slug: string): { meta: PostMeta; content: string } | undefined {
   const filePath = path.join(postsDirectory, year, month, `${slug}.mdx`)
 
   if (!fs.existsSync(filePath)) {
@@ -60,9 +60,7 @@ export function getPost(year: string, month: string, slug: string): { meta: Post
   }
 
   // ファイルの内容を読み込む
-  const { data, content, excerpt } = matter.read(filePath, { excerpt: true })
-
-  const replacedContent = content.replace(excerpt! + '---', '')
+  const { data, content } = matter.read(filePath)
 
   if (!isFrontmatter(data)) {
     throw new Error(`Invalid frontmatter in post: ${year}/${month}/${slug}`)
@@ -78,29 +76,8 @@ export function getPost(year: string, month: string, slug: string): { meta: Post
       month,
       description,
     },
-    content: replacedContent,
+    content,
   }
-}
-
-/**
- * dataがFrontmatter型であることを検証する関数
- */
-export function isFrontmatter(data: unknown): data is Frontmatter {
-  return (
-    typeof data === 'object' &&
-    data !== null &&
-    'title' in data &&
-    typeof data.title === 'string' &&
-    'createdAt' in data &&
-    typeof data.createdAt === 'string' &&
-    (!('updatedAt' in data) || ('updatedAt' in data && (typeof data.updatedAt === 'string' || data.updatedAt === undefined))) &&
-    'tags' in data &&
-    Array.isArray(data.tags) &&
-    data.tags.every((tag: unknown) => typeof tag === 'string') &&
-    'published' in data &&
-    typeof data.published === 'boolean' &&
-    (!('isTest' in data) || ('isTest' in data && (typeof data.isTest === 'boolean' || data.isTest === undefined)))
-  )
 }
 
 // 記事データのルートディレクトリのパス
@@ -152,13 +129,15 @@ function getPostsMetaByYearAndMonth(year: string, month: string): PostMeta[] {
   const filesInDirectory = fs.readdirSync(yearMonthDirectory).filter((file) => file.endsWith('.mdx'))
 
   // ファイルからメタデータを取得
-  const postsMetaList = filesInDirectory.map((file) => {
-    const post = getPost(year, month, file.replace('.mdx', ''))
-    if (!post) {
-      return undefined
-    }
-    return post.meta
-  }).filter((post) => post !== undefined)
+  const postsMetaList = filesInDirectory
+    .map((file) => {
+      const post = getPost(year, month, file.replace('.mdx', ''))
+      if (!post) {
+        return undefined
+      }
+      return post.meta
+    })
+    .filter((post) => post !== undefined)
 
   // createdAtで降順にソート
   return postsMetaList.sort((a, b) => {
@@ -167,65 +146,22 @@ function getPostsMetaByYearAndMonth(year: string, month: string): PostMeta[] {
 }
 
 /**
- * 指定されたslugの記事の冒頭部分から適切な長さの説明文を生成する
+ * dataがFrontmatter型であることを検証する
  */
-// export function old_generateDescriptionFromSlug(year: string, month: string, slug: string): string {
-//   // 引数からファイルパスを生成
-//   const filePath = path.join(postsDirectory, year, month, `${slug}.mdx`)
-
-//   // ファイルの内容を読み込む
-//   const fileContents = fs.readFileSync(filePath, 'utf8')
-
-//   return generateDescriptionFromContent(fileContents)
-// }
-
-/**
- * 指定されたslugの記事のメタデータを取得
- */
-// export function old_getPostMetaBySlug(
-//   year: string,
-//   month: string,
-//   slug: string,
-// ): PostMeta | undefined {
-//   // 指定した年月ディレクトリ内のすべてのファイルを取得
-//   const yearMonthDirectory = path.join(postsDirectory, year, month)
-
-//   // ディレクトリが存在しない場合はnullを返す
-//   if (!fs.existsSync(yearMonthDirectory)) {
-//     return undefined
-//   }
-
-//   // スラッグに一致するファイルを探す
-//   const file = fs.readdirSync(yearMonthDirectory).find((file) => file.match(new RegExp(`\\d{2}_${slug}\\.mdx?$`)))
-
-//   // 対応するファイルがない場合はnullを返す
-//   if (!file) {
-//     return undefined
-//   }
-
-//   // ファイルパス
-//   const filePath = path.join(yearMonthDirectory, file)
-
-//   // ファイルの内容を読み込む
-//   const fileContents = fs.readFileSync(filePath, 'utf8')
-
-//   // frontmatterとcontentをパース
-//   const { data, content } = matter(fileContents)
-
-//   const meta = {
-//     ...data,
-//     slug,
-//     year,
-//     month,
-//   } as PostMeta
-
-//   // 記事の冒頭から説明文を自動生成
-//   const description = generateDescriptionFromContent(content)
-
-//   // テスト記事の場合、本番環境では非表示
-//   if (meta.isTest && !shouldDisplayTestPosts) {
-//     return null
-//   }
-
-//   return { meta, content, description }
-// }
+function isFrontmatter(data: unknown): data is Frontmatter {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'title' in data &&
+    typeof data.title === 'string' &&
+    'createdAt' in data &&
+    typeof data.createdAt === 'string' &&
+    (!('updatedAt' in data) || ('updatedAt' in data && (typeof data.updatedAt === 'string' || data.updatedAt === undefined))) &&
+    'tags' in data &&
+    Array.isArray(data.tags) &&
+    data.tags.every((tag: unknown) => typeof tag === 'string') &&
+    'published' in data &&
+    typeof data.published === 'boolean' &&
+    (!('isTest' in data) || ('isTest' in data && (typeof data.isTest === 'boolean' || data.isTest === undefined)))
+  )
+}
