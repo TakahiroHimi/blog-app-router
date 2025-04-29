@@ -25,7 +25,7 @@ const config: Config = {
     },
   },
   plugins: [
-    typography,
+    typography
   ],
 }
 

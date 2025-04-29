@@ -1,8 +1,8 @@
-import { getAllPosts, getPostBySlug } from '@/lib/content'
+import { getAllPostsMeta } from '@/lib/content'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const posts = getAllPosts()
+  const posts = getAllPostsMeta()
   const baseUrl = 'https://himi.blog'
   
   // RSSフィードのXMLを構築
@@ -22,9 +22,7 @@ export async function GET() {
       const pubDate = new Date(post.createdAt).toUTCString()
       // 更新日があれば設定
       const updatedDate = post.updatedAt ? new Date(post.updatedAt).toUTCString() : null
-      
-      const postDetail = getPostBySlug(post.year, post.month, post.slug)
-      const description = postDetail ? postDetail.description : ''
+      const description = post.description
       
       return `
   <item>

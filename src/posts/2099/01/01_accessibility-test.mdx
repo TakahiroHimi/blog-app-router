@@ -1,0 +1,194 @@
+---
+title: 'アクセシビリティとVRTテスト用ページ'
+createdAt: '2099-01-01'
+updatedAt: '2099-01-02'
+tags: ['テスト', 'アクセシビリティ', 'VRT']
+published: true
+isTest: true
+---
+
+export const metaData = {
+  title: 'アクセシビリティとVRTテスト用ページ',
+  createdAt: '2099-01-01',
+  updatedAt: '2099-01-02',
+  tags: ['テスト', 'アクセシビリティ', 'VRT'],
+  published: true,
+  isTest: true,
+}
+
+import { LinkCard } from '@/components/LinkCard/LinkCard'
+
+---
+
+# アクセシビリティとVRTテスト用ページ
+
+このページはアクセシビリティテストおよびVisual Regression Testing (VRT)のために作成された特別なページです。一般ユーザーには表示されません。
+
+## 見出しレベル2
+
+### 見出しレベル3
+
+#### 見出しレベル4
+
+##### 見出しレベル5
+
+###### 見出しレベル6
+
+## テキスト装飾
+
+普通のテキスト
+
+**太字のテキスト**
+
+*イタリック体のテキスト*
+
+~~取り消し線のテキスト~~
+
+`インラインコード`
+
+## リスト
+
+### 順序なしリスト
+
+- アイテム1
+- アイテム2
+  - ネストされたアイテム2.1
+  - ネストされたアイテム2.2
+- アイテム3
+
+### 順序付きリスト
+
+1. 最初のアイテム
+2. 2番目のアイテム
+   1. ネストされたアイテム2.1
+   2. ネストされたアイテム2.2
+3. 3番目のアイテム
+
+### チェックリスト
+
+- [x] 完了したタスク
+- [ ] 未完了のタスク
+- [x] もう一つの完了したタスク
+
+## 引用
+
+> これは引用文です。
+> 
+> 複数行にわたる引用も可能です。
+>
+> > ネストされた引用も可能です。
+
+## コードブロック
+
+```javascript
+// JavaScriptのコードブロック
+function hello() {
+  console.log("Hello, world!");
+}
+
+hello();
+```
+
+```css
+/* CSSのコードブロック */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+```
+
+## 表
+
+| 名前 | 年齢 | 職業 |
+|------|------|------|
+| 山田太郎 | 30 | エンジニア |
+| 佐藤花子 | 25 | デザイナー |
+| 鈴木一郎 | 40 | マネージャー |
+
+## リンク
+
+[外部リンク](https://example.com)
+
+[内部リンク](/posts)
+
+## 画像
+
+![サンプル画像](https://via.placeholder.com/300x200)
+
+## 水平線
+
+---
+
+## 特殊記法
+
+### 定義リスト
+
+HTML
+: HyperText Markup Language
+
+CSS
+: Cascading Style Sheets
+
+JavaScript
+: ウェブページに動的な機能を追加するプログラミング言語
+
+### 脚注
+
+これは脚注付きのテキストです[^1]。
+
+[^1]: これは脚注の内容です。
+
+## カスタムコンポーネント
+
+LinkCardコンポーネントのテスト:
+
+<LinkCard url="https://zenn.dev/" />
+
+<LinkCard url="https://nextjs.org/" />
+
+<LinkCard url="https://zenn.dev/catnose99/articles/zenn-dev-stack" />
+
+## 数式表現（テスト用）
+
+インライン数式: E = mc²
+
+ブロック数式:
+
+```
+(-b ± √(b² - 4ac)) / 2a
+```
+
+## アクセシビリティテスト用要素
+
+<div role="alert">これはアラート通知です。</div>
+
+<details>
+  <summary>折りたたみセクション</summary>
+  <p>ここは折りたたまれたコンテンツです。</p>
+</details>
+
+<figure>
+  <img src="https://via.placeholder.com/400x300" alt="説明画像" />
+  <figcaption>図のキャプション</figcaption>
+</figure>
+
+<blockquote cite="https://example.com">
+  <p>引用元が明示された引用文</p>
+  <footer>— <cite>出典者</cite></footer>
+</blockquote>
+
+## インタラクティブ要素
+
+<button>クリック可能なボタン（MDXの場合）</button>
+
+<div tabIndex="0" role="button">キーボードアクセス可能な要素</div>
+
+<form>
+  <label htmlFor="test-input">テスト入力:</label>
+  <input id="test-input" type="text" placeholder="入力テスト" />
+</form>
+
+---
+
+このテストページは環境変数によって本番環境では表示されないようになっています。 

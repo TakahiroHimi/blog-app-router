@@ -11,6 +11,8 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@custom-variant prose-inline-code (&.prose :where(:not(pre)>code):not(:where([class~="not-prose"] *)));
+
 body {
   background: #ffffff;
   color: #171717;

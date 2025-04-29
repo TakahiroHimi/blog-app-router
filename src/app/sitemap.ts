@@ -1,12 +1,12 @@
 import { MetadataRoute } from 'next'
-import { getAllPosts } from '@/lib/content'
+import { getAllPostsMeta } from '@/lib/content'
 
 const BASE_URL = 'https://himi.blog'
 const POSTS_PER_SITEMAP = 100 // 1サイトマップあたりの記事数
 
 // サイトマップIDを生成
 export async function generateSitemaps() {
-  const posts = getAllPosts()
+  const posts = getAllPostsMeta()
   const totalSitemaps = Math.ceil(posts.length / POSTS_PER_SITEMAP)
   
   // IDが0のサイトマップは固定ページ用
@@ -22,7 +22,7 @@ export async function generateSitemaps() {
 
 // サイトマップの生成
 export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
-  const posts = getAllPosts()
+  const posts = getAllPostsMeta()
   
   // ID 0は固定ページ用
   if (id === 0) {

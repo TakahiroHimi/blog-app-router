@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import type { PostMeta } from '@/lib/content'
 
-type PostListProps = {
-  posts: Array<PostMeta & { description: string }>
+type Props = {
+  posts: Array<PostMeta>
 }
 
-export function PostList({ posts }: PostListProps) {
+export function PostList({ posts }: Props) {
   if (posts.length === 0) {
     return (
       <div className="py-8 text-center">

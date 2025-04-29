@@ -1,9 +1,19 @@
 ---
 title: 'Next.jsでブログを作る方法'
-description: 'Next.jsとMDXを使った技術ブログの構築方法について解説します。'
 createdAt: '2024-06-01'
 tags: ['Next.js', 'React', 'MDX']
 published: true
+---
+
+export const metaData = {
+  title: 'Next.jsでブログを作る方法',
+  createdAt: '2024-06-01',
+  tags: ['Next.js', 'React', 'MDX'],
+  published: true,
+}
+
+import { LinkCard } from '@/components/LinkCard/LinkCard'
+
 ---
 
 Next.jsとMDXを使った技術ブログの構築方法について解説します。このブログ記事では、以下の内容について説明します。
@@ -34,9 +44,7 @@ export default HomePage
 
 Next.jsの公式サイトは以下のリンクから確認できます：
 
-<LinkCard>
-https://nextjs.org/
-</LinkCard>
+<LinkCard url="https://nextjs.org/" />
 
 ## MDXの導入方法
 
@@ -44,9 +52,7 @@ MDXは、マークダウンでJSXを書けるようにする拡張形式です�
 
 MDXについて詳しくは以下のサイトを参照してください：
 
-<LinkCard>
-https://mdxjs.com/
-</LinkCard>
+<LinkCard url="https://mdxjs.com/" />
 
 ## コンテンツの管理方法
 
@@ -56,6 +62,4 @@ https://mdxjs.com/
 
 TailwindCSSを使ったスタイリングやダークモード対応の方法について解説します。
 
-<LinkCard>
-https://tailwindcss.com/
-</LinkCard> 
+<LinkCard url="https://tailwindcss.com/" />
