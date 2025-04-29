@@ -4,15 +4,23 @@ import { NextResponse } from 'next/server'
 export async function GET() {
   const posts = getAllPostsMeta()
   const baseUrl = 'https://himi.blog'
-  
+
   // RSSフィードのXMLを構築
-  const xml = `<?xml version="1.0" encoding="UTF-8" ?>
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
   <title>himi.blog</title>
   <link>${baseUrl}</link>
   <description>himi.blog</description>
   <language>ja</language>
+  <pubDate>${posts[0].createdAt}</pubDate>
+  <ttl>10</ttl>
+  <image>
+    <url>${baseUrl}/logo.png</url>
+    <title>himi.blog</title>
+    <link>${baseUrl}</link>
+  </image>
+  <generator>himi.blog RSS Generator</generator>
   <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
   <atom:link href="${baseUrl}/api/rss" rel="self" type="application/rss+xml" />
   ${posts
@@ -23,16 +31,16 @@ export async function GET() {
       // 更新日があれば設定
       const updatedDate = post.updatedAt ? new Date(post.updatedAt).toUTCString() : null
       const description = post.description
-      
+
       return `
   <item>
     <title><![CDATA[${post.title}]]></title>
     <link>${url}</link>
-    <guid isPermaLink="true">${url}</guid>
+    <guid isPermaLink="true">${url}${updatedDate ? `?updated=${updatedDate}` : ''}</guid>
     <description><![CDATA[${description}]]></description>
     <pubDate>${pubDate}</pubDate>
     ${updatedDate ? `<dc:date>${updatedDate}</dc:date>` : ''}
-    ${post.tags.map(tag => `<category>${tag}</category>`).join('')}
+    ${post.tags.map((tag) => `<category>${tag}</category>`).join('')}
   </item>`
     })
     .join('')}
@@ -46,4 +54,4 @@ export async function GET() {
       'Cache-Control': 'public, max-age=3600, s-maxage=21600',
     },
   })
-} 
+}

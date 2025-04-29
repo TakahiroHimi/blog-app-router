@@ -8,18 +8,21 @@ export default function Home() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      {/* TODO：内容を修正 */}
       <Script
         id="structured-data"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "himi.blog",
-            "description": "himi.blog",
-            "url": "https://himi.blog",
-          })
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'himi.blog',
+            description: 'himi.blog',
+            url: 'https://himi.blog',
+            image: {
+              '@type': 'ImageObject',
+              url: 'https://himi.blog/logo.png',
+            },
+          }),
         }}
       />
       <div className="mb-8 text-center">

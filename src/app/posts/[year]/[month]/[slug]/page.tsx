@@ -131,11 +131,15 @@ export default async function PostPage({ params }: PageParams) {
   })
 
   const postUrl = `https://himi.blog/posts/${year}/${month}/${slug}`
+
+  const ogImageUrl = new URL(`/api/og/post`, 'https://himi.blog')
+  // OG画像のURLパラメータを設定
+  ogImageUrl.searchParams.append('title', post.meta.title)
+
   const metaData = post.meta
 
   return (
     <div className="max-w-4xl mx-auto">
-      {/* TODO:内容を修正 */}
       <Script
         id="article-structured-data"
         type="application/ld+json"
@@ -143,16 +147,33 @@ export default async function PostPage({ params }: PageParams) {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
+            url: postUrl,
             headline: metaData.title,
+            description: metaData.description,
             datePublished: metaData.createdAt,
             dateModified: metaData.updatedAt || metaData.createdAt,
+            image: {
+              '@type': 'ImageObject',
+              url: ogImageUrl.toString(),
+              width: 1200,
+              height: 630,
+              caption: metaData.title,
+            },
             author: {
               '@type': 'Person',
-              name: 'himi.blog Author',
+              name: 'Takahiro Himi',
+              url: 'https://himi.blog',
+              sameAs: ['https://x.com/himi_himi_', 'https://github.com/TakahiroHimi'],
+              image: {
+                '@type': 'ImageObject',
+                url: 'https://himi.blog/logo.png',
+              },
             },
             publisher: {
               '@type': 'Organization',
               name: 'himi.blog',
+              url: 'https://himi.blog',
+              sameAs: ['https://x.com/himi_himi_', 'https://github.com/TakahiroHimi'],
               logo: {
                 '@type': 'ImageObject',
                 url: 'https://himi.blog/logo.png',
@@ -162,7 +183,8 @@ export default async function PostPage({ params }: PageParams) {
               '@type': 'WebPage',
               '@id': postUrl,
             },
-            keywords: metaData.tags.join(', '),
+            keywords: metaData.tags,
+            inLanguage: 'ja-JP',
           }),
         }}
       />
