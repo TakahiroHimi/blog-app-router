@@ -72,7 +72,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
       description: post.meta.description,
       type: 'article',
       publishedTime: post.meta.createdAt,
-      modifiedTime: post.meta.updatedAt || post.meta.createdAt,
+      modifiedTime: post.meta.updatedAt,
       url,
       tags: post.meta.tags,
       images: [
@@ -89,9 +89,14 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
       title: post.meta.title,
       description: post.meta.description,
       images: [ogImageUrl.toString()],
+      creator: '@himi_himi_',
+      site: '@himi_himi_',
     },
     alternates: {
       canonical: url,
+      types: {
+        'application/rss+xml': 'https://himi.blog/api/rss',
+      },
     },
   }
 }
