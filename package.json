@@ -12,7 +12,10 @@
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "test-ct": "playwright test -c playwright-ct.config.ts",
     "test-ct:ui": "playwright test -c playwright-ct.config.ts --ui",
-    "test-ct:debug": "playwright test -c playwright-ct.config.ts --debug"
+    "test-ct:debug": "playwright test -c playwright-ct.config.ts --debug",
+    "test-e2e": "playwright test",
+    "test-e2e:ui": "playwright test --ui",
+    "test-e2e:debug": "playwright test --debug"
   },
   "dependencies": {
     "@mdx-js/mdx": "^3.1.0",
@@ -28,6 +31,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@playwright/experimental-ct-react": "^1.52.0",
+    "@playwright/test": "^1.52.0",
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20",
