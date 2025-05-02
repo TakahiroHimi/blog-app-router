@@ -29,6 +29,19 @@ const components = {
     // それ以外の場合はそのまま表示
     return <div className="border p-4 rounded-md">{url}</div>
   },
+  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
+    if (props.id === 'footnote-label') {
+      return (
+        <>
+          <hr />
+          <section {...props}>
+            <span className="font-bold text-xl text-gray-600">脚注</span>
+          </section>
+        </>
+      )
+    }
+    return <h2 {...props} />
+  },
 }
 
 // 静的ページの生成に必要なパラメータを提供
