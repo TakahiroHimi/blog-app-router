@@ -10,13 +10,11 @@ import { LinkCard } from '@/components/LinkCard/LinkCard'
 import rehypePrettyCode from 'rehype-pretty-code'
 import remarkGfm from 'remark-gfm'
 
-type PageParams = {
-  params: {
-    year: string
-    month: string
-    slug: string
-  }
-}
+type PageParams = Promise<{
+  year: string
+  month: string
+  slug: string
+}>
 
 const components = {
   LinkCard: ({ children }: { children: { props: { children: string } } }) => {
@@ -56,8 +54,8 @@ export async function generateStaticParams() {
 }
 
 // メタデータを動的に生成
-export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
-  const paramsData = await Promise.resolve(params)
+export async function generateMetadata({ params }: { params: PageParams }): Promise<Metadata> {
+  const paramsData = await params
   const year = paramsData.year
   const month = paramsData.month
   const slug = paramsData.slug
@@ -115,8 +113,8 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
 }
 
 // 記事詳細ページ
-export default async function PostPage({ params }: PageParams) {
-  const paramsData = await Promise.resolve(params)
+export default async function PostPage({ params }: { params: PageParams }) {
+  const paramsData = await params
   const year = paramsData.year
   const month = paramsData.month
   const slug = paramsData.slug

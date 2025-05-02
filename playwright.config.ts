@@ -42,31 +42,20 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chrome',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'Google Chrome',
+      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     },
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'safari',
-      use: { ...devices['Desktop Safari'] },
+      name: 'Microsoft Edge',
+      use: { ...devices['Desktop Edge'], channel: 'msedge' },
     },
     {
       name: 'Mobile Chrome',
-      use: { ...devices['Pixel 5'] },
+      use: { ...devices['Pixel 5'], isMobile: true },
     },
     {
       name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
+      use: { ...devices['iPhone 12'], isMobile: true },
     },
   ],
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://127.0.0.1:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 })
