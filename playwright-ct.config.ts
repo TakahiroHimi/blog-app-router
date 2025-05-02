@@ -1,14 +1,15 @@
 import { dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
 
-import { defineConfig, devices } from '@playwright/experimental-ct-react'
+import { defineConfig, devices, PlaywrightTestConfig } from '@playwright/experimental-ct-react'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig({
+
+export const config: PlaywrightTestConfig = {
   testDir: './',
   testMatch: '**/*.ct.spec.tsx',
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
@@ -67,4 +68,6 @@ export default defineConfig({
       use: { ...devices['iPhone 12'], isMobile: true },
     },
   ],
-})
+}
+
+export default defineConfig(config)

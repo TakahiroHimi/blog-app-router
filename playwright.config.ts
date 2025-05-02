@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test'
+import { defineConfig, devices, PlaywrightTestConfig } from '@playwright/test'
 
 /**
  * Read environment variables from file.
@@ -11,7 +11,8 @@ import { defineConfig, devices } from '@playwright/test'
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig({
+
+export const config: PlaywrightTestConfig = {
   testDir: './e2e',
   testMatch: '**/*.e2e.spec.ts',
   snapshotDir: './__snapshots__/e2e/',
@@ -64,4 +65,6 @@ export default defineConfig({
       use: { ...devices['iPhone 12'], isMobile: true },
     },
   ],
-})
+}
+
+export default defineConfig(config)

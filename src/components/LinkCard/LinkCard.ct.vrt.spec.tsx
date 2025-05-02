@@ -10,9 +10,8 @@ const server = (html: string) =>
     }),
   )
 
-test.describe('表示が正しいこと', () => {
-  test('全ての要素がある場合', async ({ mount, page }) => {
-    const html = `
+test('全ての要素がある場合', async ({ mount }) => {
+  const html = `
         <html>
           <head>
             <title>サンプルページ</title>
@@ -27,17 +26,10 @@ test.describe('表示が正しいこと', () => {
           </body>
         </html>
         `
-    server(html).listen()
-    const component = await mount(await LinkCard({ url: 'http://example.com' }))
+  server(html).listen()
+  const component = await mount(await LinkCard({ url: 'http://example.com' }))
 
-    // urlへのリンク要素であること
-    await expect(
-      page.getByRole('link', {
-        name: 'OGタイトル これはサンプルページの説明です。リンクカードのテスト用に作成されました。 サンプルサイト',
-      }),
-    ).toBeVisible()
-    await expect(component).toHaveAttribute('href', 'http://example.com')
+  await expect(component).toHaveScreenshot()
 
-    server(html).close()
-  })
+  server(html).close()
 })

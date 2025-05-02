@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Playwright VRT
 on:
   push:
     branches: [main, master]
@@ -19,10 +19,19 @@ jobs:
         run: pnpm exec playwright install --with-deps
       - name: Run Playwright tests
         id: playwright-tests
-        run: pnpm test-ct:trace
+        run: pnpm test-e2e:vrt && pnpm test-ct:vrt
+      - name: Update Snapshots
+        if: failure() && steps.playwright-tests.conclusion == 'failure'
+        run: pnpm test-e2e:vrt --update-snapshots && pnpm test-ct:vrt --update-snapshots
       - uses: actions/upload-artifact@v4
         if: always() && !cancelled()
         with:
           name: playwright-report
           path: playwright-report/
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: always() && !cancelled()
+        with:
+          name: snapshots
+          path: '**/__snapshots__'
           retention-days: 30
