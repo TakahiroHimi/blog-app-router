@@ -12,9 +12,11 @@
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "test-ct": "playwright test -c playwright-ct.config.ts",
     "test-ct:ui": "playwright test -c playwright-ct.config.ts --ui",
+    "test-ct:trace": "playwright test -c playwright-ct.config.ts --trace on",
     "test-ct:debug": "playwright test -c playwright-ct.config.ts --debug",
     "test-e2e": "playwright test",
     "test-e2e:ui": "playwright test --ui",
+    "test-e2e:trace": "playwright test --trace on",
     "test-e2e:debug": "playwright test --debug"
   },
   "dependencies": {
