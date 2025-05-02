@@ -39,6 +39,12 @@ export default defineConfig({
     url: 'http://localhost:3000',
   },
 
+  expect: {
+    toHaveScreenshot: {
+      stylePath: './screenshot.css',
+    },
+  },
+
   /* Configure projects for major browsers */
   projects: [
     {
