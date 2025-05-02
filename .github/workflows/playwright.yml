@@ -19,13 +19,12 @@ jobs:
         run: pnpm exec playwright install --with-deps
       - name: Run Playwright tests
         id: playwright-tests
-        continue-on-error: true
         run: pnpm test-e2e:trace && pnpm test-ct:trace
       - name: Update Snapshots
-        if: steps.playwright-tests.outcome == 'failure'
+        if: failure() && steps.playwright-tests.conclusion == 'failure'
         run: pnpm test-e2e --update-snapshots && pnpm test-ct --update-snapshots && mkdir -p playwright-report/__snapshots__ && find . -name "__snapshots__" -type d -exec cp -r {} playwright-report/ \;
       - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+        if: always() && !cancelled()
         with:
           name: playwright-report
           path: playwright-report/
