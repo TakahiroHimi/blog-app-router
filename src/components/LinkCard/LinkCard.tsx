@@ -92,7 +92,6 @@ export async function LinkCard({ url }: LinkCardProps) {
 
   // URLからホスト名を抽出
   const hostname = new URL(url).hostname
-
   return (
     <a
       href={url}
@@ -103,12 +102,12 @@ export async function LinkCard({ url }: LinkCardProps) {
       <div className="flex flex-row">
         {ogImage && (
           <div className="w-1/3 max-h-24 md:max-h-36 relative">
-            <img src={ogImage} alt={title} className="object-cover w-full h-full" />
+            <img src={ogImage} alt="" className="object-cover w-full h-full" />
           </div>
         )}
         <div className="p-3 md:p-4 flex-1 flex flex-col justify-between">
           <div>
-            <h3 className="text-sm md:text-lg font-medium text-gray-900 line-clamp-1 mb-1 md:mb-2">{title}</h3>
+            <p className="text-sm md:text-lg font-medium text-gray-900 line-clamp-1 mb-1 md:mb-2">{title}</p>
             {description && (
               <p className="text-xs md:text-sm text-gray-600 line-clamp-1 md:line-clamp-2 mb-1 md:mb-3">{description}</p>
             )}
@@ -116,7 +115,7 @@ export async function LinkCard({ url }: LinkCardProps) {
           <div className="flex items-center mt-1 md:mt-2">
             {favicon && (
               <div className="mr-2 w-3 h-3 md:w-4 md:h-4">
-                <img src={favicon} alt={hostname} className="w-3 h-3 md:w-4 md:h-4 object-contain" />
+                <img src={favicon} alt="" className="w-3 h-3 md:w-4 md:h-4 object-contain" />
               </div>
             )}
             <span className="text-xs text-gray-500">{siteName || hostname}</span>
