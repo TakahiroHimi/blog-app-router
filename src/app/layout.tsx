@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Noto_Sans_JP } from 'next/font/google'
 import { Header } from '@/components/Header/Header'
@@ -26,6 +26,12 @@ const notoSansJP = Noto_Sans_JP({
 // GA4の測定ID（実際の値に置き換える）
 const GA_MEASUREMENT_ID = 'G-WFFESS2BGN'
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+}
+
 export const metadata: Metadata = {
   title: 'himi.blog',
   description: 'himi.blog',
@@ -36,11 +42,6 @@ export const metadata: Metadata = {
   publisher: '@himi_himi_',
   applicationName: 'himi.blog',
   generator: 'Next.js',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    viewportFit: 'cover',
-  },
   openGraph: {
     title: 'himi.blog',
     description: 'himi.blog',
