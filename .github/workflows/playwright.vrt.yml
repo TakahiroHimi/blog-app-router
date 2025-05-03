@@ -35,3 +35,13 @@ jobs:
           name: snapshots
           path: '**/__snapshots__'
           retention-days: 30
+  upload-artifact-to-pages:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Upload Artifact to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
