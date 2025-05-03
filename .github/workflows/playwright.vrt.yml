@@ -35,6 +35,9 @@ jobs:
           name: snapshots
           path: '**/__snapshots__'
           retention-days: 30
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: playwright-report/
   upload-artifact-to-pages:
     environment:
       name: github-pages
