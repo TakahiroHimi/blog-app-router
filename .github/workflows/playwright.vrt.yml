@@ -19,7 +19,7 @@ jobs:
         run: pnpm exec playwright install --with-deps
       - name: Run Playwright tests
         id: playwright-tests
-        run: pnpm test-e2e:vrt ; pnpm test-ct:vrt
+        run: pnpm test-e2e:vrt --open=never ; pnpm test-ct:vrt --open=never
       - name: Update Snapshots
         if: failure() && steps.playwright-tests.conclusion == 'failure'
         run: pnpm test-e2e:vrt --update-snapshots --reporter=null && pnpm test-ct:vrt --update-snapshots --reporter=null
@@ -38,6 +38,7 @@ jobs:
           path: '**/__snapshots__'
           retention-days: 30
       - name: Create index.html
+        if: always() && !cancelled()
         run: |
           cat > playwright-report/index.html << 'EOL'
           <!DOCTYPE html>
