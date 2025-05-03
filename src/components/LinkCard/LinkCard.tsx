@@ -118,7 +118,7 @@ export async function LinkCard({ url }: LinkCardProps) {
                 <img src={favicon} alt="" className="w-3 h-3 md:w-4 md:h-4 object-contain" />
               </div>
             )}
-            <span className="text-xs text-gray-500">{siteName || hostname}</span>
+            <span className="text-xs text-gray-500">aaa{siteName || hostname}</span>
           </div>
         </div>
       </div>
