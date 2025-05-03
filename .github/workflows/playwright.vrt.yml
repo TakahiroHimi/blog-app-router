@@ -22,7 +22,7 @@ jobs:
         run: pnpm test-e2e:vrt && pnpm test-ct:vrt
       - name: Update Snapshots
         if: failure() && steps.playwright-tests.conclusion == 'failure'
-        run: pnpm test-e2e:vrt --update-snapshots && pnpm test-ct:vrt --update-snapshots
+        run: pnpm test-e2e:vrt --update-snapshots --reporter=null && pnpm test-ct:vrt --update-snapshots --reporter=null
       - name: Upload Artifacts - Playwright Report
         uses: actions/upload-artifact@v4
         if: always() && !cancelled()
