@@ -35,34 +35,35 @@ jobs:
         if: always() && !cancelled()
         with:
           name: actual-snapshots
-          path: '**/__snapshots__'
+          path: __snapshots__/
           retention-days: 30
       - name: Create index.html
         if: always() && !cancelled()
-        run: |
-          cat > playwright-report/index.html << 'EOL'
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <title>Playwright Test Reports</title>
-            <style>
-              body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-              h1 { color: #333; }
-              .links { margin-top: 20px; }
-              .links a { display: block; margin: 10px 0; padding: 10px; background-color: #f0f0f0; 
-                        text-decoration: none; color: #333; border-radius: 4px; }
-              .links a:hover { background-color: #e0e0e0; }
-            </style>
-          </head>
-          <body>
-            <h1>Playwright Test Reports</h1>
-            <div class="links">
-              <a href="/e2e">E2E Tests Report</a>
-              <a href="/ct">Component Tests Report</a>
-            </div>
-          </body>
-          </html>
-          EOL
+        run: echo "<h1>Hello GitHub Pages!</h1>" > playwright-report/index.html
+        # run: |
+        #   cat > playwright-report/index.html << 'EOL'
+        #   <!DOCTYPE html>
+        #   <html>
+        #   <head>
+        #     <title>Playwright Test Reports</title>
+        #     <style>
+        #       body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        #       h1 { color: #333; }
+        #       .links { margin-top: 20px; }
+        #       .links a { display: block; margin: 10px 0; padding: 10px; background-color: #f0f0f0;
+        #                 text-decoration: none; color: #333; border-radius: 4px; }
+        #       .links a:hover { background-color: #e0e0e0; }
+        #     </style>
+        #   </head>
+        #   <body>
+        #     <h1>Playwright Test Reports</h1>
+        #     <div class="links">
+        #       <a href="/e2e">E2E Tests Report</a>
+        #       <a href="/ct">Component Tests Report</a>
+        #     </div>
+        #   </body>
+        #   </html>
+        #   EOL
       - name: Upload Artifacts - Pages Artifact
         uses: actions/upload-pages-artifact@v3
         if: always() && !cancelled()
