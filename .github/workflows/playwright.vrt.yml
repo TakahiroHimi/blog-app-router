@@ -19,7 +19,7 @@ jobs:
         run: pnpm exec playwright install --with-deps
       - name: Run Playwright tests
         id: playwright-tests
-        run: pnpm test-e2e:vrt && pnpm test-ct:vrt
+        run: pnpm test-e2e:vrt ; pnpm test-ct:vrt
       - name: Update Snapshots
         if: failure() && steps.playwright-tests.conclusion == 'failure'
         run: pnpm test-e2e:vrt --update-snapshots --reporter=null && pnpm test-ct:vrt --update-snapshots --reporter=null
