@@ -23,19 +23,23 @@ jobs:
       - name: Update Snapshots
         if: failure() && steps.playwright-tests.conclusion == 'failure'
         run: pnpm test-e2e:vrt --update-snapshots && pnpm test-ct:vrt --update-snapshots
-      - uses: actions/upload-artifact@v4
+      - name: Upload Artifacts - Playwright Report
+        uses: actions/upload-artifact@v4
         if: always() && !cancelled()
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-      - uses: actions/upload-artifact@v4
+      - name: Upload Artifacts - Snapshots
+        uses: actions/upload-artifact@v4
         if: always() && !cancelled()
         with:
           name: snapshots
           path: '**/__snapshots__'
           retention-days: 30
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload Artifacts - Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        if: always() && !cancelled()
         with:
           path: playwright-report/
   upload-artifact-to-pages:
@@ -47,8 +51,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: test
-    if: always()
+    if: always() && !cancelled()
     steps:
-      - name: Upload Artifact to GitHub Pages
+      - name: Upload PagesArtifact to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
