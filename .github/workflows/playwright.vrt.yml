@@ -39,6 +39,9 @@ jobs:
         with:
           path: playwright-report/
   upload-artifact-to-pages:
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
