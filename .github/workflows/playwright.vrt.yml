@@ -35,6 +35,9 @@ jobs:
       - name: Create index.html
         if: always() && !cancelled()
         run: |
+          ls -la
+          echo "Checking playwright-report directory:"
+          ls -la playwright-report || echo "playwright-report directory does not exist yet"
           cat > playwright-report/index.html << 'EOL'
           <!DOCTYPE html>
           <html>
