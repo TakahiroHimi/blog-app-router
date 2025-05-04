@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Playwright tests
 on:
   push:
     branches: [main, master]
@@ -17,12 +17,54 @@ jobs:
         run: npm install -g pnpm && pnpm install
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
+
+      # テスト実行
       - name: Run Playwright tests
         id: playwright-tests
-        run: pnpm test-ct:trace
-      - uses: actions/upload-artifact@v4
+        run: pnpm test-e2e:all ; pnpm test-ct:all
+      # playwright-reportをartifactsに保存
+      - name: Upload Artifacts - Playwright Report
+        uses: actions/upload-artifact@v4
         if: always() && !cancelled()
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+      # GitHub Pages 用のindex.html をplaywright-reportにコピー
+      - name: Create index.html
+        if: always() && !cancelled()
+        run: cp .github/github-pages-index.html playwright-report/index.html
+      # GitHub Pages用のartifactsを保存
+      - name: Upload Artifacts - Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        if: always() && !cancelled()
+        with:
+          path: playwright-report/
+
+      # actual snapshots を作成
+      - name: Update Snapshots
+        if: failure() && steps.playwright-tests.conclusion == 'failure'
+        run: pnpm test-e2e:vrt --update-snapshots --reporter=null && pnpm test-ct:vrt --update-snapshots --reporter=null
+      # actual snapshots をartifactsに保存
+      - name: Upload Artifacts - Actual Snapshots
+        uses: actions/upload-artifact@v4
+        if: always() && !cancelled()
+        with:
+          name: actual-snapshots
+          path: __snapshots__/
+          retention-days: 30
+  upload-artifact-to-pages:
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: test
+    if: always() && !cancelled()
+    steps:
+      - name: Upload PagesArtifact to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
