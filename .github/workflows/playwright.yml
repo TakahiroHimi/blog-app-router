@@ -21,7 +21,15 @@ jobs:
       # テスト実行
       - name: Run Playwright tests
         id: playwright-tests
-        run: pnpm test-e2e:all ; pnpm test-ct:all
+        run: |
+          set +e  # エラーが発生してもスクリプトの実行を継続
+          pnpm test-e2e:all
+          E2E_EXIT_CODE=$?  # 終了コードを保存
+          pnpm test-ct:all
+          CT_EXIT_CODE=$?   # 終了コードを保存
+          if [ $E2E_EXIT_CODE -ne 0 ] || [ $CT_EXIT_CODE -ne 0 ]; then
+            exit 1  # どちらかのテストが失敗した場合はステップを失敗させる
+          fi
       # playwright-reportをartifactsに保存
       - name: Upload Artifacts - Playwright Report
         uses: actions/upload-artifact@v4
