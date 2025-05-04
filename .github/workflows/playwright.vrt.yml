@@ -18,17 +18,18 @@ jobs:
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
 
-      # テスト実行&artifactsを保存
+      # テスト実行
       - name: Run Playwright tests
         id: playwright-tests
-        run: pnpm test-e2e:vrt --open=never ; pnpm test-ct:vrt --open=never
-      # - name: Upload Artifacts - Playwright Report
-      #   uses: actions/upload-artifact@v4
-      #   if: always() && !cancelled()
-      #   with:
-      #     name: playwright-report
-      #     path: playwright-report/
-      #     retention-days: 30
+        run: pnpm test-e2e:vrt ; pnpm test-ct:vrt
+      # playwright-reportをartifactsに保存
+      - name: Upload Artifacts - Playwright Report
+        uses: actions/upload-artifact@v4
+        if: always() && !cancelled()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
 
       # GitHub Pages用のartifactsを保存する
       # GitHub Pages 用のindex.html を作成
@@ -69,10 +70,12 @@ jobs:
         with:
           path: playwright-report/
 
-      # actual snapshots をartifactsに保存
+      # actual snapshots を作成
       - name: Update Snapshots
         if: failure() && steps.playwright-tests.conclusion == 'failure'
         run: pnpm test-e2e:vrt --update-snapshots --reporter=null && pnpm test-ct:vrt --update-snapshots --reporter=null
+
+      # actual snapshots をartifactsに保存
       - name: Upload Artifacts - Actual Snapshots
         uses: actions/upload-artifact@v4
         if: always() && !cancelled()
