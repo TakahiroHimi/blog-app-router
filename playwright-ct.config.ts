@@ -49,6 +49,7 @@ export const config: PlaywrightTestConfig = {
   webServer: {
     command: 'pnpm dev',
     url: 'http://localhost:3000',
+    reuseExistingServer: true,
   },
 
   /* Configure projects for major browsers */

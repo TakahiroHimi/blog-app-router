@@ -97,7 +97,7 @@ export async function LinkCard({ url }: LinkCardProps) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="not-prose block no-underline mb-6 border border-gray-200 rounded-md overflow-hidden hover:shadow-md transition-shadow"
+      className="not-prose block overflow-hidden no-underline mb-6 border border-gray-200 rounded-md hover:shadow-md transition-shadow"
     >
       <div className="flex flex-row">
         {ogImage && (
@@ -105,20 +105,22 @@ export async function LinkCard({ url }: LinkCardProps) {
             <img src={ogImage} alt="" className="object-cover w-full h-full" />
           </div>
         )}
-        <div className="p-3 md:p-4 flex-1 flex flex-col justify-between">
+        <div className="p-3 md:p-4 flex-1 flex flex-col justify-between overflow-hidden">
           <div>
             <p className="text-sm md:text-lg font-medium text-gray-900 line-clamp-1 mb-1 md:mb-2">{title}</p>
             {description && (
-              <p className="text-xs md:text-sm text-gray-600 line-clamp-1 md:line-clamp-2 mb-1 md:mb-3">{description}</p>
+              <p className="text-xs md:text-sm text-gray-600 line-clamp-1 md:line-clamp-2 mb-1 md:mb-3 overflow-hidden break-words">
+                {description}
+              </p>
             )}
           </div>
-          <div className="flex items-center mt-1 md:mt-2">
+          <div className="flex items-center mt-1 md:mt-2 ">
             {favicon && (
-              <div className="mr-2 w-3 h-3 md:w-4 md:h-4">
+              <div className="flex-shrink-0 mr-2 w-3 h-3 md:w-4 md:h-4">
                 <img src={favicon} alt="" className="w-3 h-3 md:w-4 md:h-4 object-contain" />
               </div>
             )}
-            <span className="text-xs text-gray-500">{siteName || hostname}</span>
+            <div className="text-xs text-gray-500 line-clamp-1 inline-block text-ellipsis">{siteName || hostname}</div>
           </div>
         </div>
       </div>

@@ -55,12 +55,14 @@ export async function GET(request: NextRequest) {
               {title}
             </div>
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 16 }}>
-              <div style={{
-                width: 80,
-                height: 80,
-                backgroundImage: `url(https://himi.blog/profile_image_75_75.png)`,
-                borderRadius: 100,
-              }} />
+              <div
+                style={{
+                  width: 80,
+                  height: 80,
+                  backgroundImage: `url(https://himi.blog/profile_image_75_75.png)`,
+                  borderRadius: 100,
+                }}
+              />
               <div style={{ fontSize: 32, color: '#6B7280' }}>himi.blog</div>
             </div>
           </div>
