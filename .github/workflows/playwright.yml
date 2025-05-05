@@ -23,9 +23,9 @@ jobs:
         id: playwright-tests
         run: |
           set +e  # エラーが発生してもスクリプトの実行を継続
-          pnpm test-e2e:all
+          pnpm test-e2e:all --trace on
           E2E_EXIT_CODE=$?  # 終了コードを保存
-          pnpm test-ct:all
+          pnpm test-ct:all --trace on
           CT_EXIT_CODE=$?   # 終了コードを保存
           if [ $E2E_EXIT_CODE -ne 0 ] || [ $CT_EXIT_CODE -ne 0 ]; then
             exit 1  # どちらかのテストが失敗した場合はステップを失敗させる
