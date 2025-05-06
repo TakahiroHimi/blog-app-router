@@ -46,3 +46,7 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+# Playwright スナップショット（linux.pngで終わらないもの）
+__snapshots__/**/*
+!__snapshots__/**/*.linux.png
+
