@@ -46,9 +46,13 @@ export function PostList({ posts }: Props) {
 
           <div className="flex flex-wrap gap-2">
             {post.tags.map((tag) => (
-              <span key={tag} className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-md">
+              <Link
+                key={tag}
+                href={`/tags/${encodeURIComponent(tag)}`}
+                className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+              >
                 {tag}
-              </span>
+              </Link>
             ))}
           </div>
 

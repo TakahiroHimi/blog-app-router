@@ -8,8 +8,7 @@ test.describe('Post - VRT', () => {
       throw new Error('Viewport is not defined')
     }
 
-    await page.setViewportSize({ width: viewport.width, height: 8000 })
-    await expect(page).toHaveScreenshot()
+    await expect(page).toHaveScreenshot({ fullPage: true })
   })
 
   test('カスタムコンポーネントテストページ', async ({ page, viewport }) => {
@@ -19,7 +18,6 @@ test.describe('Post - VRT', () => {
       throw new Error('Viewport is not defined')
     }
 
-    await page.setViewportSize({ width: viewport.width, height: 8000 })
-    await expect(page).toHaveScreenshot()
+    await expect(page).toHaveScreenshot({ fullPage: true })
   })
 })

@@ -146,6 +146,14 @@ function getPostsMetaByYearAndMonth(year: string, month: string): PostMeta[] {
 }
 
 /**
+ * タグで記事をフィルタリングする
+ */
+export function getPostsByTag(tag: string): PostMeta[] {
+  const allPosts = getAllPostsMeta()
+  return allPosts.filter((post) => post.tags.includes(tag))
+}
+
+/**
  * dataがFrontmatter型であることを検証する
  */
 function isFrontmatter(data: unknown): data is Frontmatter {

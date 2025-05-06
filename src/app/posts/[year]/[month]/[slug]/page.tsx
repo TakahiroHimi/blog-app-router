@@ -252,9 +252,13 @@ export default async function PostPage({ params }: { params: PageParams }) {
 
           <div className="flex flex-wrap gap-2 mb-4">
             {metaData.tags.map((tag) => (
-              <span key={tag} className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-md">
+              <Link
+                key={tag}
+                href={`/tags/${encodeURIComponent(tag)}`}
+                className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+              >
                 {tag}
-              </span>
+              </Link>
             ))}
           </div>
         </header>
