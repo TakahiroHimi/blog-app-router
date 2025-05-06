@@ -1,6 +1,7 @@
 import { getAllPostsMeta } from '@/lib/content'
 import { PostList } from '@/components/PostList/PostList'
 import Script from 'next/script'
+import { BASE_URL, getAbsoluteUrl } from '@/lib/constants'
 
 export default function Home() {
   // すべての記事を取得
@@ -17,10 +18,10 @@ export default function Home() {
             '@type': 'WebSite',
             name: 'himi.blog',
             description: 'himi.blog',
-            url: 'https://himi.blog',
+            url: BASE_URL,
             image: {
               '@type': 'ImageObject',
-              url: 'https://himi.blog/logo.png',
+              url: getAbsoluteUrl('/logo.png'),
             },
           }),
         }}

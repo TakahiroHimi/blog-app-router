@@ -5,6 +5,7 @@ import { Header } from '@/components/Header/Header'
 import { Footer } from '@/components/Footer/Footer'
 import Script from 'next/script'
 import './globals.css'
+import { BASE_URL } from '@/lib/constants'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -35,9 +36,9 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: 'himi.blog',
   description: 'himi.blog',
-  metadataBase: new URL('https://himi.blog'),
+  metadataBase: new URL(BASE_URL),
   keywords: ['フロントエンド', 'TypeScript', 'Next.js', 'React', 'アクセシビリティ'],
-  authors: [{ name: 'himi', url: 'https://himi.blog' }],
+  authors: [{ name: 'himi', url: BASE_URL }],
   creator: '@himi_himi_',
   publisher: '@himi_himi_',
   applicationName: 'himi.blog',
@@ -45,12 +46,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'himi.blog',
     description: 'himi.blog',
-    url: 'https://himi.blog',
+    url: BASE_URL,
     siteName: 'himi.blog',
     type: 'website',
     images: [
       {
-        url: 'https://himi.blog/api/og',
+        url: `${BASE_URL}/api/og`,
         width: 1200,
         height: 630,
         alt: 'himi.blog',
@@ -61,14 +62,14 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'himi.blog',
     description: 'himi.blog',
-    images: ['https://himi.blog/api/og'],
+    images: [`${BASE_URL}/api/og`],
     creator: '@himi_himi_',
     site: '@himi_himi_',
   },
   alternates: {
-    canonical: 'https://himi.blog',
+    canonical: BASE_URL,
     types: {
-      'application/rss+xml': 'https://himi.blog/api/rss',
+      'application/rss+xml': `${BASE_URL}/api/rss`,
     },
   },
   robots: {

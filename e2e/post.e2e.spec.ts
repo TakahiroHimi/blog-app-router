@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright'
 
 test.describe('Post - E2E', () => {
   test('トップページ', async ({ page }) => {
-    await page.goto('http://localhost:3000')
+    await page.goto('/')
 
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze()
 
@@ -11,7 +11,7 @@ test.describe('Post - E2E', () => {
   })
 
   test('マークダウンテストページ', async ({ page }) => {
-    await page.goto('http://localhost:3000/posts/2099/01/01_markdown-test')
+    await page.goto('/posts/2099/01/01_markdown-test')
 
     const accessibilityScanResults = await new AxeBuilder({ page }).exclude('input[type="checkbox"]').analyze()
 
@@ -19,7 +19,7 @@ test.describe('Post - E2E', () => {
   })
 
   test('カスタムコンポーネントテストページ', async ({ page }) => {
-    await page.goto('http://localhost:3000/posts/2099/01/02_custom-component-test')
+    await page.goto('/posts/2099/01/02_custom-component-test')
 
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze()
 

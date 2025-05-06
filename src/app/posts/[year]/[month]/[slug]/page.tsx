@@ -9,6 +9,7 @@ import * as runtime from 'react/jsx-runtime'
 import { LinkCard } from '@/components/LinkCard/LinkCard'
 import rehypePrettyCode from 'rehype-pretty-code'
 import remarkGfm from 'remark-gfm'
+import { BASE_URL, getAbsoluteUrl } from '@/lib/constants'
 
 type PageParams = Promise<{
   year: string
@@ -69,8 +70,8 @@ export async function generateMetadata({ params }: { params: PageParams }): Prom
     }
   }
 
-  const url = `https://himi.blog/posts/${year}/${month}/${slug}`
-  const ogImageUrl = new URL(`/api/og/post`, 'https://himi.blog')
+  const url = getAbsoluteUrl(`/posts/${year}/${month}/${slug}`)
+  const ogImageUrl = new URL(`/api/og/post`, BASE_URL)
 
   // OG画像のURLパラメータを設定
   ogImageUrl.searchParams.append('title', post.meta.title)
@@ -106,7 +107,7 @@ export async function generateMetadata({ params }: { params: PageParams }): Prom
     alternates: {
       canonical: url,
       types: {
-        'application/rss+xml': 'https://himi.blog/api/rss',
+        'application/rss+xml': getAbsoluteUrl('/api/rss'),
       },
     },
   }
@@ -141,9 +142,9 @@ export default async function PostPage({ params }: { params: PageParams }) {
     baseUrl: import.meta.url,
   })
 
-  const postUrl = `https://himi.blog/posts/${year}/${month}/${slug}`
+  const postUrl = getAbsoluteUrl(`/posts/${year}/${month}/${slug}`)
 
-  const ogImageUrl = new URL(`/api/og/post`, 'https://himi.blog')
+  const ogImageUrl = new URL(`/api/og/post`, BASE_URL)
   // OG画像のURLパラメータを設定
   ogImageUrl.searchParams.append('title', post.meta.title)
 
@@ -173,21 +174,21 @@ export default async function PostPage({ params }: { params: PageParams }) {
             author: {
               '@type': 'Person',
               name: 'Takahiro Himi',
-              url: 'https://himi.blog',
+              url: BASE_URL,
               sameAs: ['https://x.com/himi_himi_', 'https://github.com/TakahiroHimi'],
               image: {
                 '@type': 'ImageObject',
-                url: 'https://himi.blog/logo.png',
+                url: getAbsoluteUrl('/logo.png'),
               },
             },
             publisher: {
               '@type': 'Organization',
               name: 'himi.blog',
-              url: 'https://himi.blog',
+              url: BASE_URL,
               sameAs: ['https://x.com/himi_himi_', 'https://github.com/TakahiroHimi'],
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://himi.blog/logo.png',
+                url: getAbsoluteUrl('/logo.png'),
               },
             },
             mainEntityOfPage: {

@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
-
+import { BASE_URL } from '@/lib/constants'
 export const runtime = 'edge'
 
 export async function GET(request: NextRequest) {
@@ -44,12 +44,14 @@ export async function GET(request: NextRequest) {
               style={{
                 display: 'flex',
                 justifyContent: 'center',
+                alignItems: 'center',
                 fontSize: 64,
                 fontWeight: 'bold',
                 color: '#111827',
                 lineHeight: 1.4,
                 wordBreak: 'break-word',
                 textAlign: 'left',
+                flex: 1,
               }}
             >
               {title}
@@ -59,7 +61,7 @@ export async function GET(request: NextRequest) {
                 style={{
                   width: 80,
                   height: 80,
-                  backgroundImage: `url(https://himi.blog/profile_image_75_75.png)`,
+                  backgroundImage: `url(${BASE_URL}/profile_image_75_75.png)`,
                   borderRadius: 100,
                 }}
               />

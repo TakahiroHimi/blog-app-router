@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og'
+import { BASE_URL } from '@/lib/constants'
 
 export const runtime = 'edge'
 
@@ -51,7 +52,7 @@ export async function GET() {
               style={{
                 width: 80,
                 height: 80,
-                backgroundImage: `url(https://himi.blog/profile_image_75_75.png)`,
+                backgroundImage: `url(${BASE_URL}/profile_image_75_75.png)`,
                 borderRadius: 100,
               }}
             />
@@ -63,6 +64,6 @@ export async function GET() {
     {
       width: 1200,
       height: 630,
-    }
+    },
   )
-} 
+}

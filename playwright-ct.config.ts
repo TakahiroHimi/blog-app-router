@@ -44,6 +44,8 @@ export const config: PlaywrightTestConfig = {
         },
       },
     },
+
+    baseURL: 'http://localhost:3000',
   },
 
   webServer: {

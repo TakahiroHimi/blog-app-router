@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright'
 
 test.describe('Tag - E2E', () => {
   test('アクセシビリティの検証', async ({ page }) => {
-    await page.goto('http://localhost:3000/tags/テスト')
+    await page.goto('/tags/テスト')
 
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze()
 
@@ -15,13 +15,13 @@ test.describe('Tag - E2E', () => {
     const encodedTestTag = encodeURIComponent('テスト')
 
     // トップページにアクセス
-    await page.goto('http://localhost:3000')
+    await page.goto('/')
 
     // 「テスト」タグをクリック
     await page.getByRole('link', { name: 'テスト', exact: true }).first().click()
 
     // ページ遷移を待機
-    await page.waitForURL(`http://localhost:3000/tags/${encodedTestTag}`)
+    await page.waitForURL(`/tags/${encodedTestTag}`)
 
     // タグページのタイトルが正しいことを確認
     await expect(page.locator('h1')).toContainText('#テスト')
@@ -35,13 +35,13 @@ test.describe('Tag - E2E', () => {
     const encodedTagFunctionTag = encodeURIComponent('タグ機能')
 
     // 記事詳細ページにアクセス
-    await page.goto('http://localhost:3000/posts/2099/01/03_tag-test')
+    await page.goto('/posts/2099/01/03_tag-test')
 
     // 「タグ機能」タグをクリック
     await page.getByRole('link', { name: 'タグ機能', exact: true }).first().click()
 
     // ページ遷移を待機
-    await page.waitForURL(`http://localhost:3000/tags/${encodedTagFunctionTag}`)
+    await page.waitForURL(`/tags/${encodedTagFunctionTag}`)
 
     // タグページのタイトルが正しいことを確認
     await expect(page.locator('h1')).toContainText('#タグ機能')
@@ -52,20 +52,20 @@ test.describe('Tag - E2E', () => {
 
   test('タグページから記事へのナビゲーション', async ({ page }) => {
     // 「テスト」タグページにアクセス
-    await page.goto('http://localhost:3000/tags/テスト')
+    await page.goto('/tags/テスト')
 
     // 表示された記事のタイトルをクリック
     await page.getByRole('link', { name: 'タグテスト用ページ' }).click()
 
     // 記事詳細ページに遷移したことを確認
-    await expect(page).toHaveURL('http://localhost:3000/posts/2099/01/03_tag-test')
+    await expect(page).toHaveURL('/posts/2099/01/03_tag-test')
   })
 
   test('複数のタグを持つ記事の表示', async ({ page }) => {
     // 「タグ機能」をURLエンコードした文字列
     const encodedTagFunctionTag = encodeURIComponent('タグ機能')
     // 「プログラミング」タグページにアクセス
-    await page.goto('http://localhost:3000/tags/プログラミング')
+    await page.goto('/tags/プログラミング')
 
     // 「タグテスト用ページ」が表示されていることを確認
     await expect(page.getByRole('link', { name: 'タグテスト用ページ' })).toBeVisible()
@@ -74,6 +74,6 @@ test.describe('Tag - E2E', () => {
     await page.getByRole('link', { name: 'タグ機能' }).click()
 
     // ページ遷移を待機
-    await page.waitForURL(`http://localhost:3000/tags/${encodedTagFunctionTag}`)
+    await page.waitForURL(`/tags/${encodedTagFunctionTag}`)
   })
 })
