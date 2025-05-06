@@ -16,6 +16,7 @@ export const CopyUrlButton: React.FC<CopyUrlButtonProps> = ({ url }) => {
     <Button
       onClick={handleCopy}
       className="inline-flex items-center justify-center p-3 border border-gray-300 rounded-full shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      aria-label="URLをコピー"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
