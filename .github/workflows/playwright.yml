@@ -53,7 +53,10 @@ jobs:
       # actual snapshots を作成
       - name: Update Snapshots
         if: failure() && steps.playwright-tests.conclusion == 'failure'
-        run: rm -rf __snapshots__ && ls -la && pnpm test-e2e:vrt --update-snapshots --reporter=null && pnpm test-ct:vrt --update-snapshots --reporter=null
+        run: |
+          rm -rf __snapshots__ && pnpm test-e2e:vrt --update-snapshots --reporter=null && pnpm test-ct:vrt --update-snapshots --reporter=null
+          echo "LinkCard.ct.vrt.spec.tsx の内容:"
+          cat src/components/LinkCard/LinkCard.ct.vrt.spec.tsx
       # actual snapshots をartifactsに保存
       - name: Upload Artifacts - Actual Snapshots
         uses: actions/upload-artifact@v4
