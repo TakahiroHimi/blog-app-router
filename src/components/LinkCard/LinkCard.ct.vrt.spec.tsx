@@ -17,10 +17,10 @@ const normalOgImage = 'http://localhost:3000/fixture/LinkCard/normalOgImage.png'
 const normalSiteName = 'サンプルサイトネーム'
 
 // irregular data
-const longTitle = 'サンプルページタイトル'.repeat(10)
-const longDescription = 'これはサンプルページの説明です。'.repeat(10)
+const longTitle = normalTitle.repeat(20)
+const longDescription = normalDescription.repeat(20)
 const squareOgImage = 'http://localhost:3000/fixture/LinkCard/squareOgImage.png'
-const longSiteName = 'サンプルサイトネーム'.repeat(10)
+const longSiteName = normalSiteName.repeat(20)
 
 const sampleHtml = (title?: string, description?: string, image?: string, siteName?: string) => `
         <html>
