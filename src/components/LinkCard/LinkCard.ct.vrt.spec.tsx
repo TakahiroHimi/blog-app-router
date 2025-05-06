@@ -22,19 +22,14 @@ const longDescription = 'これはサンプルページの説明です。'.repea
 const squareOgImage = 'http://localhost:3000/fixture/LinkCard/squareOgImage.png'
 const longSiteName = 'サンプルサイトネーム'.repeat(10)
 
-const sampleHtml = (
-  title: string = normalTitle,
-  description: string = normalDescription,
-  image: string = normalOgImage,
-  siteName: string = normalSiteName,
-) => `
+const sampleHtml = (title?: string, description?: string, image?: string, siteName?: string) => `
         <html>
           <head>
-            <title>${title}</title>
-            <meta property="og:title" content="${title}">
-            <meta property="og:description" content="${description}">
-            <meta property="og:image" content="${image}">
-            <meta property="og:site_name" content="${siteName}">
+            ${title ? `<title>${title}</title>` : ''}
+            ${title ? `<meta property="og:title" content="${title}">` : ''}
+            ${description ? `<meta property="og:description" content="${description}">` : ''}
+            ${image ? `<meta property="og:image" content="${image}">` : ''}
+            ${siteName ? `<meta property="og:site_name" content="${siteName}">` : ''}
             <link rel="icon" href="http://localhost:3000/logo.png">
           </head>
           <body>
@@ -46,7 +41,7 @@ const sampleHtml = (
 test.describe('VRT', () => {
   test.describe('全ての要素がある場合', () => {
     test('normal data', async ({ mount }) => {
-      const html = sampleHtml()
+      const html = sampleHtml(normalTitle, normalDescription, normalOgImage, normalSiteName)
       server(html).listen()
 
       const component = await mount(await LinkCard({ url: 'http://example.com' }))
