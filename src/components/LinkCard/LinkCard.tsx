@@ -120,7 +120,7 @@ export async function LinkCard({ url }: LinkCardProps) {
                 <img src={favicon} alt="" className="w-3 h-3 md:w-4 md:h-4 object-contain" />
               </div>
             )}
-            <p className="text-xs text-gray-500 line-clamp-1 inline-block text-ellipsis">{(siteName || hostname).repeat(50)}</p>
+            <p className="text-xs text-gray-500 line-clamp-1 text-ellipsis">{(siteName || hostname).repeat(50)}</p>
           </div>
         </div>
       </div>
