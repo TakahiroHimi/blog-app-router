@@ -49,7 +49,7 @@ test.describe('VRT', () => {
       const html = sampleHtml()
       server(html).listen()
 
-      const component = await mount(await LinkCard({ url: 'http://example.com' }))
+      const component = await mount(await LinkCard({ url: 'https://nextjs.org/' }))
 
       await expect(component).toHaveScreenshot()
 
