@@ -107,10 +107,10 @@ export async function LinkCard({ url }: LinkCardProps) {
         )}
         <div className="p-3 md:p-4 flex-1 flex flex-col justify-between overflow-hidden">
           <div>
-            <p className="text-sm md:text-lg font-medium text-gray-900 line-clamp-1 mb-1 md:mb-2">{title}</p>
+            <p className="text-sm md:text-lg font-medium text-gray-900 line-clamp-1 mb-1 md:mb-2">{title.repeat(50)}</p>
             {description && (
               <p className="text-xs md:text-sm text-gray-600 line-clamp-1 md:line-clamp-2 mb-1 md:mb-3 overflow-hidden break-words">
-                {description}
+                {description.repeat(50)}
               </p>
             )}
           </div>
@@ -120,7 +120,9 @@ export async function LinkCard({ url }: LinkCardProps) {
                 <img src={favicon} alt="" className="w-3 h-3 md:w-4 md:h-4 object-contain" />
               </div>
             )}
-            <div className="text-xs text-gray-500 line-clamp-1 inline-block text-ellipsis">{siteName || hostname}</div>
+            <div className="text-xs text-gray-500 line-clamp-1 inline-block text-ellipsis">
+              {(siteName || hostname).repeat(50)}
+            </div>
           </div>
         </div>
       </div>
