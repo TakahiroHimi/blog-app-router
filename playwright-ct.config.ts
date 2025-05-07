@@ -48,7 +48,7 @@ export const config: PlaywrightTestConfig = {
     ...(process.env.CI
       ? {
           webServer: {
-            command: 'pnpm start',
+            command: 'NEXT_PUBLIC_BASE_URL=http://localhost:3000 pnpm start',
             port: 3000,
             reuseExistingServer: true,
           },
