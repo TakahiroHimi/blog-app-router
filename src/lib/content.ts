@@ -83,7 +83,7 @@ export function getPost(year: string, month: string, slug: string): { meta: Post
 // 記事データのルートディレクトリのパス
 const postsDirectory = path.join(process.cwd(), 'src/posts')
 // 環境変数に基づいてテスト記事を表示するかどうかを判断する
-const shouldDisplayTestPosts = process.env.NODE_ENV !== 'production' || process.env.SHOW_TEST_POSTS === 'true'
+const shouldDisplayTestPosts = process.env.NODE_ENV !== 'production' || process.env.CI || process.env.SHOW_TEST_POSTS === 'true'
 
 /**
  * 記事の文章から適切な長さの説明文を生成する
