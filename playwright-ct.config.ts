@@ -45,18 +45,18 @@ export const config: PlaywrightTestConfig = {
       },
     },
 
-    ...(process.env.CI
-      ? {
-          webServer: {
-            command: 'NEXT_PUBLIC_BASE_URL=http://localhost:3000 pnpm start',
-            port: 3000,
-            reuseExistingServer: true,
-          },
-        }
-      : {}),
-
     baseURL: 'http://localhost:3000',
   },
+
+  ...(process.env.CI
+    ? {
+        webServer: {
+          command: 'NEXT_PUBLIC_BASE_URL=http://localhost:3000 pnpm start',
+          port: 3000,
+          reuseExistingServer: true,
+        },
+      }
+    : {}),
 
   /* Configure projects for major browsers */
   projects: [
