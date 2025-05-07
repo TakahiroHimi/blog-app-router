@@ -10,6 +10,7 @@ const server = (html: string) =>
     }),
   )
 
+test.describe.configure({ mode: 'parallel' })
 test.describe('表示が正しいこと', () => {
   test('全ての要素がある場合', async ({ mount, page }) => {
     const html = `
