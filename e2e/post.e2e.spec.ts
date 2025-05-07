@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 
+test.describe.configure({ mode: 'parallel' })
 test.describe('Post - E2E', () => {
   test('トップページ', async ({ page }) => {
     await page.goto('/')

@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 
+test.describe.configure({ mode: 'parallel' })
 test.describe('Tag - E2E', () => {
   test('アクセシビリティの検証', async ({ page }) => {
     await page.goto('/tags/テスト')

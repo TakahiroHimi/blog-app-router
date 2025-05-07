@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 
+test.describe.configure({ mode: 'parallel' })
 test.describe('Post - VRT', () => {
   test('マークダウンテストページ', async ({ page }) => {
     await page.goto('/posts/2099/01/01_markdown-test')
