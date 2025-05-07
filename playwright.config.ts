@@ -39,11 +39,6 @@ export const config: PlaywrightTestConfig = {
     baseURL: 'http://localhost:3000',
   },
 
-  webServer: {
-    command: 'pnpm dev',
-    url: 'http://localhost:3000',
-  },
-
   expect: {
     toHaveScreenshot: {
       stylePath: './screenshot.css',

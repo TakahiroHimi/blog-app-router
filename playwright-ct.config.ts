@@ -48,12 +48,6 @@ export const config: PlaywrightTestConfig = {
     baseURL: 'http://localhost:3000',
   },
 
-  webServer: {
-    command: 'pnpm dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: true,
-  },
-
   /* Configure projects for major browsers */
   projects: [
     {

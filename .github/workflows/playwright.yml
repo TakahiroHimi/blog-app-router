@@ -15,8 +15,15 @@ jobs:
           node-version: lts/*
       - name: Install dependencies
         run: npm install -g pnpm && pnpm install
+      - name: Build
+        run: pnpm build
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
+      - name: Start server
+        run: |
+          pnpm start
+          # サーバーが完全に起動するまで少し待機
+          sleep 10
 
       # テスト実行
       - name: Run Playwright tests
