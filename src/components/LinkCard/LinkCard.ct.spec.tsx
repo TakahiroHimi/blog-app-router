@@ -5,7 +5,7 @@ import { LinkCard } from './LinkCard'
 
 const server = (html: string) =>
   setupServer(
-    http.get('http://example.com', () => {
+    http.get('http://example.linkcard.ct.com', () => {
       return HttpResponse.html(html)
     }),
   )
@@ -29,7 +29,7 @@ test.describe('表示が正しいこと', () => {
         </html>
         `
     server(html).listen()
-    const component = await mount(await LinkCard({ url: 'http://example.com' }))
+    const component = await mount(await LinkCard({ url: 'http://example.linkcard.ct.com' }))
 
     // urlへのリンク要素であること
     await expect(
@@ -37,7 +37,7 @@ test.describe('表示が正しいこと', () => {
         name: 'OGタイトル これはサンプルページの説明です。リンクカードのテスト用に作成されました。 サンプルサイト',
       }),
     ).toBeVisible()
-    await expect(component).toHaveAttribute('href', 'http://example.com')
+    await expect(component).toHaveAttribute('href', 'http://example.linkcard.ct.com')
 
     server(html).close()
   })

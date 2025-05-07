@@ -5,7 +5,7 @@ import { LinkCard } from './LinkCard'
 
 const createMockServer = (html: string) => {
   return setupServer(
-    http.get('http://example.com', () => {
+    http.get('http://example.linkcard.ct.vrt.com', () => {
       return HttpResponse.html(html)
     }),
   )
@@ -47,7 +47,7 @@ test.describe('VRT', () => {
       const server = createMockServer(html)
       server.listen()
 
-      const component = await mount(await LinkCard({ url: 'http://example.com' }))
+      const component = await mount(await LinkCard({ url: 'http://example.linkcard.ct.vrt.com' }))
 
       await expect(component).toHaveScreenshot()
 
@@ -58,7 +58,7 @@ test.describe('VRT', () => {
       const server = createMockServer(html)
       server.listen()
 
-      const component = await mount(await LinkCard({ url: 'http://example.com' }))
+      const component = await mount(await LinkCard({ url: 'http://example.linkcard.ct.vrt.com' }))
 
       await expect(component).toHaveScreenshot()
 
@@ -72,7 +72,7 @@ test.describe('VRT', () => {
       const server = createMockServer(html)
       server.listen()
 
-      const component = await mount(await LinkCard({ url: 'http://example.com' }))
+      const component = await mount(await LinkCard({ url: 'http://example.linkcard.ct.vrt.com' }))
 
       await expect(component).toHaveScreenshot()
 
@@ -83,7 +83,7 @@ test.describe('VRT', () => {
       const server = createMockServer(html)
       server.listen()
 
-      const component = await mount(await LinkCard({ url: 'http://example.com' }))
+      const component = await mount(await LinkCard({ url: 'http://example.linkcard.ct.vrt.com' }))
 
       await expect(component).toHaveScreenshot()
 
@@ -94,7 +94,7 @@ test.describe('VRT', () => {
       const server = createMockServer(html)
       server.listen()
 
-      const component = await mount(await LinkCard({ url: 'http://example.com' }))
+      const component = await mount(await LinkCard({ url: 'http://example.linkcard.ct.vrt.com' }))
 
       await expect(component).toHaveScreenshot()
 
@@ -105,7 +105,7 @@ test.describe('VRT', () => {
       const server = createMockServer(html)
       server.listen()
 
-      const component = await mount(await LinkCard({ url: 'http://example.com' }))
+      const component = await mount(await LinkCard({ url: 'http://example.linkcard.ct.vrt.com' }))
 
       await expect(component).toHaveScreenshot()
 
