@@ -39,6 +39,16 @@ export const config: PlaywrightTestConfig = {
     baseURL: 'http://localhost:3000',
   },
 
+  ...(process.env.CI
+    ? {
+        webServer: {
+          command: 'pnpm start',
+          port: 3000,
+          reuseExistingServer: true,
+        },
+      }
+    : {}),
+
   expect: {
     toHaveScreenshot: {
       stylePath: './screenshot.css',

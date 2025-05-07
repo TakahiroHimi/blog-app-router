@@ -45,6 +45,16 @@ export const config: PlaywrightTestConfig = {
       },
     },
 
+    ...(process.env.CI
+      ? {
+          webServer: {
+            command: 'pnpm start',
+            port: 3000,
+            reuseExistingServer: true,
+          },
+        }
+      : {}),
+
     baseURL: 'http://localhost:3000',
   },
 
