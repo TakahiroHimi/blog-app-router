@@ -7,10 +7,6 @@ export default function Home() {
   // すべての記事を取得
   const allPosts = getAllPostsMeta()
 
-  console.log('########################################################################')
-  console.log('allPosts', allPosts)
-  console.log('########################################################################')
-
   return (
     <div className="max-w-4xl mx-auto">
       <Script

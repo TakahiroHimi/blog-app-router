@@ -43,22 +43,7 @@ export function getAllPostsMeta(): PostMeta[] {
   // 本番環境ではisTest: trueのフラグがある記事を除外
   const filteredPostsMeta = shouldDisplayTestPosts
     ? allPostsMeta.filter((post) => post.published)
-    : allPostsMeta.filter((post) => {
-        console.log('post', post)
-        console.log('post.published === true', post.published === true)
-        console.log('post.isTest === true', post.isTest === true)
-        console.log('post.published && !post.isTest', post.published && !post.isTest)
-        return post.published && !post.isTest
-      })
-
-  console.log('########################################################################')
-  console.log('shouldDisplayTestPosts', shouldDisplayTestPosts)
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-  console.log('process.env.CI', process.env.CI)
-  console.log('process.env.SHOW_TEST_POSTS', process.env.SHOW_TEST_POSTS)
-  console.log('allPostsMeta', allPostsMeta)
-  console.log('filteredPostsMeta', filteredPostsMeta)
-  console.log('########################################################################')
+    : allPostsMeta.filter((post) => post.published && !post.isTest)
 
   // createdAtで降順にソート
   return filteredPostsMeta.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
@@ -98,7 +83,7 @@ export function getPost(year: string, month: string, slug: string): { meta: Post
 // 記事データのルートディレクトリのパス
 const postsDirectory = path.join(process.cwd(), 'src/posts')
 // 環境変数に基づいてテスト記事を表示するかどうかを判断する
-const shouldDisplayTestPosts = process.env.NODE_ENV !== 'production' || process.env.CI || process.env.SHOW_TEST_POSTS === 'true'
+const shouldDisplayTestPosts = process.env.NODE_ENV !== 'production' || process.env.SHOW_TEST_POSTS === 'true'
 
 /**
  * 記事の文章から適切な長さの説明文を生成する

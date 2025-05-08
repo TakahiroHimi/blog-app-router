@@ -25,6 +25,7 @@ jobs:
         id: playwright-tests
         run: |
           set +e  # エラーが発生してもスクリプトの実行を継続
+          export SHOW_TEST_POSTS=true  # テスト記事を表示する環境変数を設定
           pnpm test-e2e:all --trace on
           E2E_EXIT_CODE=$?  # 終了コードを保存
           pnpm test-ct:all --trace on
@@ -56,9 +57,8 @@ jobs:
       - name: Update Snapshots
         if: failure() && steps.playwright-tests.conclusion == 'failure'
         run: |
+          export SHOW_TEST_POSTS=true  # テスト記事を表示する環境変数を設定
           rm -rf __snapshots__ && pnpm test-e2e:vrt --update-snapshots --reporter=null && pnpm test-ct:vrt --update-snapshots --reporter=null
-          echo "LinkCard.ct.vrt.spec.tsx の内容:"
-          cat src/components/LinkCard/LinkCard.ct.vrt.spec.tsx
       # actual snapshots をartifactsに保存
       - name: Upload Artifacts - Actual Snapshots
         uses: actions/upload-artifact@v4
