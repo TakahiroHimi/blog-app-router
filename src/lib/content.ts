@@ -84,7 +84,12 @@ export function getPost(year: string, month: string, slug: string): { meta: Post
 const postsDirectory = path.join(process.cwd(), 'src/posts')
 // 環境変数に基づいてテスト記事を表示するかどうかを判断する
 const shouldDisplayTestPosts = process.env.NODE_ENV !== 'production' || process.env.CI || process.env.SHOW_TEST_POSTS === 'true'
-
+console.log('########################################################################')
+console.log('shouldDisplayTestPosts', shouldDisplayTestPosts)
+console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+console.log('process.env.CI', process.env.CI)
+console.log('process.env.SHOW_TEST_POSTS', process.env.SHOW_TEST_POSTS)
+console.log('########################################################################')
 /**
  * 記事の文章から適切な長さの説明文を生成する
  */
