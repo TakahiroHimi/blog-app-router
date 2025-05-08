@@ -43,7 +43,12 @@ export function getAllPostsMeta(): PostMeta[] {
   // 本番環境ではisTest: trueのフラグがある記事を除外
   const filteredPostsMeta = shouldDisplayTestPosts
     ? allPostsMeta.filter((post) => post.published)
-    : allPostsMeta.filter((post) => post.published && !post.isTest)
+    : allPostsMeta.filter((post) => {
+        console.log('post', post)
+        console.log('post.published === true', post.published === true)
+        console.log('post.isTest === true', post.isTest === true)
+        return post.published && !post.isTest
+      })
 
   console.log('########################################################################')
   console.log('shouldDisplayTestPosts', shouldDisplayTestPosts)
