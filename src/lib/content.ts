@@ -47,6 +47,7 @@ export function getAllPostsMeta(): PostMeta[] {
         console.log('post', post)
         console.log('post.published === true', post.published === true)
         console.log('post.isTest === true', post.isTest === true)
+        console.log('post.published && !post.isTest', post.published && !post.isTest)
         return post.published && !post.isTest
       })
 
