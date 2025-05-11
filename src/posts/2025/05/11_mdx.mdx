@@ -106,12 +106,28 @@ export default async function PostPage({ params }: { params: PageParams }) {
     baseUrl: import.meta.url,
   })
 
+  // descriptionを作成
+  const description = content.substring(0, 160)
+
   return (
-    <article >
-      <div className="prose"> {/* @tailwindcss/typographyを適用するためのclassNameを設定 */}
-        <MDXContent />
-      </div>
-    </article>
+    <div>
+      {/* json-ldの設定 */}
+      <Script
+        id="article-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            description,
+          }),
+        }}
+      />
+      <article >
+        {/* @tailwindcss/typographyを適用するためのclassName（prose）を設定 */}
+        <div className="prose"> 
+          <MDXContent />
+        </div>
+      </article>
+    </div>
   )
 }
 ```
@@ -119,4 +135,5 @@ export default async function PostPage({ params }: { params: PageParams }) {
 
 ## まとめ
 descriptionをfrontmatterに毎回ちゃんと書きさえすれば`@next/mdx`で全然良かったんだけど、ちゃんと書く自信が全く無かったので少し複雑になった。  
-ただ最終的に割と納得する形に落ち付けられて良かった。  
+あとはそもそもjson-ld本当に必要なのかみたいな話もあるけど、まあ良い機会なので一応実装しておいた。  
+最終的に割と納得する形に落ち付けられて良かった。  
