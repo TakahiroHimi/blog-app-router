@@ -40,6 +40,9 @@ export function getAllPostsMeta(): PostMeta[] {
     })
   })
 
+  // 環境変数に基づいてテスト記事を表示するかどうかを判断する
+  const shouldDisplayTestPosts = process.env.NODE_ENV !== 'production' || process.env.SHOW_TEST_POSTS === 'true'
+
   // 本番環境ではisTest: trueのフラグがある記事を除外
   const filteredPostsMeta = shouldDisplayTestPosts
     ? allPostsMeta.filter((post) => post.published)
@@ -80,10 +83,16 @@ export function getPost(year: string, month: string, slug: string): { meta: Post
   }
 }
 
+/**
+ * タグで記事をフィルタリングする
+ */
+export function getPostsByTag(tag: string): PostMeta[] {
+  const allPosts = getAllPostsMeta()
+  return allPosts.filter((post) => post.tags.includes(tag))
+}
+
 // 記事データのルートディレクトリのパス
 const postsDirectory = path.join(process.cwd(), 'src/posts')
-// 環境変数に基づいてテスト記事を表示するかどうかを判断する
-const shouldDisplayTestPosts = process.env.NODE_ENV !== 'production' || process.env.SHOW_TEST_POSTS === 'true'
 
 /**
  * 記事の文章から適切な長さの説明文を生成する
@@ -143,14 +152,6 @@ function getPostsMetaByYearAndMonth(year: string, month: string): PostMeta[] {
   return postsMetaList.sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   })
-}
-
-/**
- * タグで記事をフィルタリングする
- */
-export function getPostsByTag(tag: string): PostMeta[] {
-  const allPosts = getAllPostsMeta()
-  return allPosts.filter((post) => post.tags.includes(tag))
 }
 
 /**
