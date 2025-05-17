@@ -43,7 +43,6 @@ export function getAllPostsMeta(): PostMeta[] {
   // 環境変数に基づいてテスト記事を表示するかどうかを判断する
   const shouldDisplayTestPosts = process.env.NODE_ENV !== 'production' || process.env.SHOW_TEST_POSTS === 'true'
 
-  // 本番環境ではisTest: trueのフラグがある記事を除外
   const filteredPostsMeta = shouldDisplayTestPosts
     ? allPostsMeta.filter((post) => post.published)
     : allPostsMeta.filter((post) => post.published && !post.isTest)
