@@ -28,7 +28,7 @@ test.describe('Tag - E2E', () => {
     await expect(page.locator('h1')).toContainText('#テスト')
 
     // タグページに記事のリストが表示されていることを確認
-    expect(await page.locator('article').count()).toBe(3)
+    expect(await page.locator('article').count()).toBe(4)
   })
 
   test('記事詳細ページからタグページへの遷移', async ({ page }) => {
