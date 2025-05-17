@@ -127,8 +127,8 @@ export default async function PostPage({ params }: { params: PageParams }) {
   }
 
   const recentPosts = getAllPostsMeta()
-    .slice(0, 3)
     .filter((p) => !(p.year === year && p.month === month && p.slug === slug))
+    .slice(0, 3)
 
   const code = String(
     await compile(post.content, {
@@ -288,23 +288,27 @@ export default async function PostPage({ params }: { params: PageParams }) {
 
       {recentPosts.length > 0 && (
         <div className="border-t border-gray-200 pt-8 mt-10">
-          <h2 className="text-2xl font-semibold mb-4">他の記事も読む</h2>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {recentPosts.map((post) => (
-              <div
-                key={`${post.year}-${post.month}-${post.slug}`}
-                className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors"
-              >
-                <Link href={`/posts/${post.year}/${post.month}/${post.slug}`} className="block">
-                  <h3 className="font-medium mb-2 line-clamp-2">{post.title}</h3>
-                  <p className="text-sm text-gray-600 line-clamp-2 mb-2">{post.description}</p>
-                  <time dateTime={post.createdAt} className="text-xs text-gray-500">
-                    {new Date(post.createdAt).toLocaleDateString('ja-JP')}
-                  </time>
-                </Link>
-              </div>
-            ))}
-          </div>
+          <section>
+            <h2 className="text-2xl font-semibold mb-4">他の記事も読む</h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {recentPosts.map((post) => (
+                <div
+                  key={`${post.year}-${post.month}-${post.slug}`}
+                  className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors"
+                >
+                  <Link href={`/posts/${post.year}/${post.month}/${post.slug}`} className="flex flex-col justify-between h-full">
+                    <div className="flex-grow">
+                      <h3 className="font-medium mb-2 line-clamp-2 min-h-12">{post.title}</h3>
+                      <p className="text-sm text-gray-600 line-clamp-2 mb-2">{post.description}</p>
+                    </div>
+                    <time dateTime={post.createdAt} className="text-xs text-gray-500">
+                      {new Date(post.createdAt).toLocaleDateString('ja-JP')}
+                    </time>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
       )}
 
