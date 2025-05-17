@@ -298,7 +298,7 @@ export default async function PostPage({ params }: { params: PageParams }) {
                 >
                   <Link href={`/posts/${post.year}/${post.month}/${post.slug}`} className="flex flex-col justify-between h-full">
                     <div className="flex-grow">
-                      <h3 className="font-medium mb-2 line-clamp-2 min-h-12">{post.title}</h3>
+                      <h3 className="font-medium mb-2 line-clamp-2 md:min-h-12">{post.title}</h3>
                       <p className="text-sm text-gray-600 line-clamp-2 mb-2">{post.description}</p>
                     </div>
                     <time dateTime={post.createdAt} className="text-xs text-gray-500">
