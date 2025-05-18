@@ -14,7 +14,7 @@ const config: Config = {
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
       animation: {
-        'fadeIn': 'fadeIn 0.2s ease-in-out',
+        fadeIn: 'fadeIn 0.2s ease-in-out',
       },
       keyframes: {
         fadeIn: {
@@ -22,11 +22,26 @@ const config: Config = {
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            details: {
+              borderStyle: 'solid',
+              borderWidth: '1px',
+              borderColor: 'var(--color-gray-200)',
+              borderRadius: 'var(--radius-md)',
+              padding: 'calc(var(--spacing) * 4)',
+
+              '&[open] summary': {
+                marginBottom: 'calc(var(--spacing) * 4)',
+              },
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [
-    typography
-  ],
+  plugins: [typography],
 }
 
 export default config
