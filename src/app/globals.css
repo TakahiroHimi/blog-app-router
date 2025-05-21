@@ -1,5 +1,6 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "@tailwindcss/typography";
+@config "../../tailwind.config.ts";
 
 :root {
   --font-sans: var(--font-geist-sans);
@@ -21,7 +22,7 @@ body {
 
 /* クリック可能な要素にカーソルポインタを適用 */
 button,
-[role="button"],
+[role='button'],
 summary,
 select,
 details,
