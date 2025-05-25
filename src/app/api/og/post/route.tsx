@@ -31,7 +31,6 @@ export async function GET(request: NextRequest) {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
               background: 'white',
               padding: '60px',
               borderRadius: 24,
@@ -42,16 +41,22 @@ export async function GET(request: NextRequest) {
           >
             <div
               style={{
-                display: 'flex',
+                display: '-webkit-box',
+                WebkitBoxOrient: 'vertical',
+                WebkitBoxPack: 'center',
+                WebkitBoxAlign: 'center',
+                WebkitLineClamp: 3,
                 justifyContent: 'center',
                 alignItems: 'center',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
                 fontSize: 64,
                 fontWeight: 'bold',
                 color: '#111827',
                 lineHeight: 1.4,
                 wordBreak: 'break-word',
                 textAlign: 'left',
-                flex: 1,
+                flexGrow: 1,
               }}
             >
               {title}
