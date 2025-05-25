@@ -39,7 +39,7 @@ const sampleHtml = (title?: string, description?: string, image?: string, siteNa
         </html>
         `
 
-test.describe.configure({ mode: 'parallel' })
+test.describe.configure({ mode: 'serial' })
 test.describe('VRT', () => {
   test.describe('全ての要素がある場合', () => {
     test('normal data', async ({ mount }) => {
