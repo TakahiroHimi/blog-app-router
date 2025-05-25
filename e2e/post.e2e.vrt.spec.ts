@@ -21,8 +21,20 @@ test.describe('Post - VRT', () => {
       await expect(page).toHaveScreenshot()
     })
 
+    test('2line title', async ({ page }) => {
+      await page.goto(`/api/og/post?title=${'テストページタイトル'.repeat(2)}`)
+
+      await expect(page).toHaveScreenshot()
+    })
+
+    test('3line title', async ({ page }) => {
+      await page.goto(`/api/og/post?title=${'テストページタイトル'.repeat(4)}`)
+
+      await expect(page).toHaveScreenshot()
+    })
+
     test('long title', async ({ page }) => {
-      await page.goto('/api/og/post?title=テストページタイトルテストページタイトルテストページタイトルテストページタイトル')
+      await page.goto(`/api/og/post?title=${'テストページタイトル'.repeat(10)}`)
 
       await expect(page).toHaveScreenshot()
     })
