@@ -12,9 +12,7 @@ published: true
 
 - PlaywrightでE2E、ComponentTest、アクセシビリティテスト、VRTを実装
 - Vitestでユニットテストを実装
-- GitHubActionsで各種テストを実行
-- PlaywrightのテストレポートをGitHubPagesにアップロード
-- PlaywrightのテストはDesktopのChrome, EdgeとMobileのChrome, Safariで実行
+- GitHubActionsで各種テストを実行、テストレポートをGitHubPagesにアップロード
 
 ## やりたいこと
 
@@ -175,7 +173,7 @@ PlaywrightのVRTは、リポジトリ内のスナップショットの画像フ�
 一応Playwrightのreportからもスナップショットを一枚一枚ダウンロードすることはできるけど、update対象のスナップショットを一枚ずつダウンロードするのはあまりに手間すぎる。  
 Playwrightの実行環境がDesktopのChrome, EdgeとMobileのChrome, Safariの4つあり、スナップショットも4環境分あるので、割と量もある。
 
-これについては、毎回最新のスナップショットをartifactとしてアップロードして、差分をAcceptする時はそれをそのままリポジトリのスナップショット管理ディレクトリにぶち込んでコミットできるようにした。  
+これについては、**毎回最新のスナップショットをartifactとしてアップロードして、差分をAcceptする時はそれをそのままリポジトリのスナップショット管理ディレクトリにぶち込んでコミットできるようにした**。  
 差分が発生したブランチに向けてスナップショットを更新するPRを自動で作成するような仕組みを作ると一番良いと思うので、そのうち気が向いたらやるかもしれない。  
 ブログはほとんどVRTの差分も出ないのでこれでも十分運用できるけど、実務で運用する場合はそういう仕組みがないと流石に辛すぎると思った。
 

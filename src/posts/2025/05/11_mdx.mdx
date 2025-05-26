@@ -9,7 +9,7 @@ Next.js app routerで、mdxファイルに書いたコンテンツをページ�
 
 ## 結論
 
-`gray-matter`を利用して、frontmatterはjsのオブジェクトとして、コンテンツの内容は文字列として読み込む。
+`gray-matter`を利用してmdxで作成したコンテンツをパースし、frontmatterはjsのオブジェクトとして、コンテンツの内容は文字列として読み込む。
 
 <LinkCard>https://github.com/jonschlinkert/gray-matter</LinkCard>
 
@@ -86,7 +86,7 @@ frontmatterの取り扱いについても公式ドキュメントに記載があ
 
 <LinkCard>https://nextjs.org/docs/app/guides/mdx#using-custom-styles-and-components</LinkCard>
 
-あとはmarkdownでGitHubと同じ記法を使えるようになる`remark-gfm`と、コードブロックにシンタックスハイライトを適用するための`rehype-pretty-code`を利用する。  
+あとはmarkdownでGitHubと同じ記法を使えるようになる`remark-gfm`と、コードブロックにシンタックスハイライトを適用するための`rehype-pretty-code`を追加する。  
 ここまでの内容をまとめるとこんな感じのソースになる。
 
 ```tsx
@@ -109,7 +109,7 @@ export default async function PostPage({ params }: { params: PageParams }) {
     await compile(content, {
       outputFormat: 'function-body',
       remarkPlugins: [[remarkGfm]],
-      rehypePlugins: [[rehypePrettyCode, { theme: 'dark-plus' }]], // VSCodeのデフォルトと同じテーマを設定
+      rehypePlugins: [[rehypePrettyCode, { theme: 'dark-plus' }]], // VSCodeのデフォルトテーマを設定
     }),
   )
   const { default: MDXContent } = await run(code, {
@@ -143,10 +143,10 @@ export default async function PostPage({ params }: { params: PageParams }) {
 }
 ```
 
-※別途`tailwind.config.ts`のpluginで`typography`を設定する
+※別途`tailwind.config.ts`のpluginsで`typography`を設定する
 
 ## まとめ
 
-descriptionをfrontmatterに毎回ちゃんと書きさえすれば`@next/mdx`で全然良かったんだけど、ちゃんと書く自信が全く無かったので少し複雑になった。  
+descriptionをfrontmatterに毎回ちゃんと書きさえすれば`@next/mdx`で全然良かったんだけど、毎回ちゃんと書く自信が全く無かったので少し複雑になった。  
 あとはそもそもjson-ld本当に必要なのかみたいな話もあるけど、まあ良い機会なので一応実装しておいた。  
 最終的に割と納得する形に落ち付けられて良かった。
