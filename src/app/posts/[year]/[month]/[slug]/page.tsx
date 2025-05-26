@@ -294,7 +294,7 @@ export default async function PostPage({ params }: { params: PageParams }) {
               {recentPosts.map((post) => (
                 <div
                   key={`${post.year}-${post.month}-${post.slug}`}
-                  className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors grid grid-rows-subgrid row-span-3 gap-1"
+                  className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors grid grid-rows-subgrid row-span-3 gap-2"
                 >
                   <Link href={`/posts/${post.year}/${post.month}/${post.slug}`} className="contents">
                     <h3 className="font-medium line-clamp-2">{post.title}</h3>
