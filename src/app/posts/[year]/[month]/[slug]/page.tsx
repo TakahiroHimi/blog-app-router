@@ -77,7 +77,7 @@ export async function generateMetadata({ params }: { params: PageParams }): Prom
   ogImageUrl.searchParams.append('title', post.meta.title)
 
   return {
-    title: `${post.meta.title} | himi.blog`,
+    title: `${post.meta.title} | blog.himi.dev`,
     description: post.meta.description,
     openGraph: {
       title: post.meta.title,
@@ -92,7 +92,7 @@ export async function generateMetadata({ params }: { params: PageParams }): Prom
           url: ogImageUrl.toString(),
           width: 1200,
           height: 630,
-          alt: post.meta.title + ' | himi.blog',
+          alt: post.meta.title + ' | blog.himi.dev',
         },
       ],
     },
@@ -127,8 +127,8 @@ export default async function PostPage({ params }: { params: PageParams }) {
   }
 
   const recentPosts = getAllPostsMeta()
-    .slice(0, 3)
     .filter((p) => !(p.year === year && p.month === month && p.slug === slug))
+    .slice(0, 3)
 
   const code = String(
     await compile(post.content, {
@@ -183,7 +183,7 @@ export default async function PostPage({ params }: { params: PageParams }) {
             },
             publisher: {
               '@type': 'Organization',
-              name: 'himi.blog',
+              name: 'blog.himi.dev',
               url: BASE_URL,
               sameAs: ['https://x.com/himi_himi_', 'https://github.com/TakahiroHimi'],
               logo: {
@@ -288,23 +288,25 @@ export default async function PostPage({ params }: { params: PageParams }) {
 
       {recentPosts.length > 0 && (
         <div className="border-t border-gray-200 pt-8 mt-10">
-          <h2 className="text-2xl font-semibold mb-4">他の記事も読む</h2>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {recentPosts.map((post) => (
-              <div
-                key={`${post.year}-${post.month}-${post.slug}`}
-                className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors"
-              >
-                <Link href={`/posts/${post.year}/${post.month}/${post.slug}`} className="block">
-                  <h3 className="font-medium mb-2 line-clamp-2">{post.title}</h3>
-                  <p className="text-sm text-gray-600 line-clamp-2 mb-2">{post.description}</p>
-                  <time dateTime={post.createdAt} className="text-xs text-gray-500">
-                    {new Date(post.createdAt).toLocaleDateString('ja-JP')}
-                  </time>
-                </Link>
-              </div>
-            ))}
-          </div>
+          <section>
+            <h2 className="text-2xl font-semibold mb-4">他の記事も読む</h2>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:grid-rows-[auto_1fr_auto] lg:grid-rows-[auto_1fr_auto]">
+              {recentPosts.map((post) => (
+                <div
+                  key={`${post.year}-${post.month}-${post.slug}`}
+                  className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors grid grid-rows-subgrid row-span-3 gap-2"
+                >
+                  <Link href={`/posts/${post.year}/${post.month}/${post.slug}`} className="contents">
+                    <h3 className="font-medium line-clamp-2">{post.title}</h3>
+                    <p className="text-sm text-gray-600 line-clamp-2 self-start">{post.description}</p>
+                    <time dateTime={post.createdAt} className="text-xs text-gray-500 self-end">
+                      {new Date(post.createdAt).toLocaleDateString('ja-JP')}
+                    </time>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
       )}
 

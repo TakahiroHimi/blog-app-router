@@ -34,34 +34,34 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'himi.blog',
-  description: 'himi.blog',
+  title: 'blog.himi.dev',
+  description: 'blog.himi.dev',
   metadataBase: new URL(BASE_URL),
   keywords: ['フロントエンド', 'TypeScript', 'Next.js', 'React', 'アクセシビリティ'],
   authors: [{ name: 'himi', url: BASE_URL }],
   creator: '@himi_himi_',
   publisher: '@himi_himi_',
-  applicationName: 'himi.blog',
+  applicationName: 'blog.himi.dev',
   generator: 'Next.js',
   openGraph: {
-    title: 'himi.blog',
-    description: 'himi.blog',
+    title: 'blog.himi.dev',
+    description: 'blog.himi.dev',
     url: BASE_URL,
-    siteName: 'himi.blog',
+    siteName: 'blog.himi.dev',
     type: 'website',
     images: [
       {
         url: `${BASE_URL}/api/og`,
         width: 1200,
         height: 630,
-        alt: 'himi.blog',
+        alt: 'blog.himi.dev',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'himi.blog',
-    description: 'himi.blog',
+    title: 'blog.himi.dev',
+    description: 'blog.himi.dev',
     images: [`${BASE_URL}/api/og`],
     creator: '@himi_himi_',
     site: '@himi_himi_',

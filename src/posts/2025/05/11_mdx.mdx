@@ -1,0 +1,152 @@
+---
+title: 'mdxで書いたテキストをNext.jsのページとして表示する'
+createdAt: '2025-05-11'
+tags: ['Next.js']
+published: true
+---
+
+Next.js app routerで、mdxファイルに書いたコンテンツをページとして表示する方法が何通りかあり、実装しながらあれこれ悩んだので備忘録として記録しておく。
+
+## 結論
+
+`gray-matter`を利用してmdxで作成したコンテンツをパースし、frontmatterはjsのオブジェクトとして、コンテンツの内容は文字列として読み込む。
+
+<LinkCard>https://github.com/jonschlinkert/gray-matter</LinkCard>
+
+コンテンツの文字列は`@mdx-js/mdx`を利用してJSXのコンポーネントに変換する。
+
+<LinkCard>https://github.com/mdx-js/mdx</LinkCard>
+
+スタイリングは基本的に`@tailwindcss/typography`に任せる。
+
+<LinkCard>https://github.com/tailwindlabs/tailwindcss-typography</LinkCard>
+
+`remark-gfm`を利用してGitHubのmarkdown記法を利用できるようにする。
+
+<LinkCard>https://github.com/remarkjs/remark-gfm</LinkCard>
+
+コードブロックにシンタックスハイライトを適用するために`rehype-pretty-code`を利用する。
+
+<LinkCard>https://github.com/rehype-pretty/rehype-pretty-code</LinkCard>
+
+## やりたいこと
+
+1. mdxファイルに書いたコンテンツをhtmlで表示したい
+2. ページの先頭から適当な長さの文字列を切り取って、metaタグのog:descriptionとjson-ldのdescriptionに設定したい
+
+## 方法1：`@next/mdx`を利用（🙅不採用）
+
+そもそもNext.jsでmdxを取り扱う方法はNext.jsの公式ドキュメントに載っており、ここではNext.js組み込みの`@next/mdx`を利用している。
+
+<LinkCard>https://nextjs.org/docs/app/guides/mdx</LinkCard>
+
+なのでこれに沿って実装するだけでやりたいことの1は実装できる。  
+ただしこの方法はmdxファイルを文字列として扱うことはできないので、やりたいことの2を実現するには別途他の方法でmdxファイルを読み込む必要がある。  
+まあ別途読み込めばいいんだけども、読み込む方法は1種類であった方がシンプルで良いと思うし、1記事ビルドするだけのソースの中にファイルを読み込む処理が2回あるのは不自然なので、今回は別のやり方にする。
+
+## 方法2：`next-mdx-remote-client`を利用（🙅不採用）
+
+mdxファイルのコンテンツを文字列として読み込むだけなら、シンプルにnode組み込みの`fs`を使えば良い。  
+そして読み込んだ文字列をhtmlとして表示するには、Next.jsのドキュメントで紹介されている`next-mdx-remote-client`を利用すれば良い。
+
+<LinkCard>https://nextjs.org/docs/app/guides/mdx#remote-mdx</LinkCard>
+<LinkCard>https://github.com/ipikuka/next-mdx-remote-client</LinkCard>
+
+ただし、`next-mdx-remote-client`は本来CMSやDBで管理しているmarkdownコンテンツを扱うときに利用するライブラリなので、用途が少しズレている。  
+また、`next-mdx-remote-client`の前身のライブラリである`next-mdx-remote`のドキュメントには以下のようにも書いている。
+
+> You Might Not Need next-mdx-remote  
+> If you're using React Server Components and just trying to use basic MDX with custom components, you don't need anything other than the core MDX library.
+>
+> > next-mdx-remoteは不要かもしれません。  
+> > React Server Componentsを使用していて、カスタムコンポーネントで基本的なMDXを使用しようとしているだけであれば、コアMDXライブラリ以外は必要ありません。
+
+## 方法3：`gray-matter`と`@mdx-js/mdx`を利用（🙆採用）
+
+文字列として読み込んだmdxのコンテンツを表示するだけなら、`next-mdx-remote`のドキュメントにもある通り`@mdx-js/mdx`を利用するとシンプルに実現できるので、このやり方を採用する。
+
+<LinkCard>https://github.com/hashicorp/next-mdx-remote?tab=readme-ov-file#you-might-not-need-next-mdx-remote</LinkCard>
+
+コンテンツを読み込むには`fs`を利用するのがシンプルではあるけど、この場合mdxファイル冒頭の以下のようなfrontmatterをパースする処理も自分で実装する必要があり、それは面倒臭い。
+
+```mdx
+title: 'Next.jsでブログを作る方法'
+createdAt: '2025-01-01'
+tags: ['Next.js']
+published: true
+```
+
+frontmatterの取り扱いについても公式ドキュメントに記載があり、いくつかライブラリの候補が紹介されている。  
+今回は一番シンプルに利用できて機能的にも必要十分な`gray-matter`を採用した。
+
+<LinkCard>https://nextjs.org/docs/app/guides/mdx#frontmatter</LinkCard>
+
+これでコンテンツをhtmlで表示できるようにはなったけど、まだスタイルがついてないので全て通常のテキストと同じスタイルで表示されてしまっている。  
+スタイルの付け方もNext.jsのドキュメントで紹介されていて、今回は一番簡単に設定できて機能も十分な`@tailwindcss/typography`を採用することにした。
+
+<LinkCard>https://nextjs.org/docs/app/guides/mdx#using-custom-styles-and-components</LinkCard>
+
+あとはmarkdownでGitHubと同じ記法を使えるようになる`remark-gfm`と、コードブロックにシンタックスハイライトを適用するための`rehype-pretty-code`を追加する。  
+ここまでの内容をまとめるとこんな感じのソースになる。
+
+```tsx
+import matter from 'gray-matter'
+
+import { compile, run } from '@mdx-js/mdx'
+import * as runtime from 'react/jsx-runtime'
+
+import rehypePrettyCode from 'rehype-pretty-code'
+import remarkGfm from 'remark-gfm'
+
+// 記事詳細ページ
+export default async function PostPage({ params }: { params: PageParams }) {
+  // ファイルの内容を読み込む
+  // data：frontmatter, content：コンテンツの文字列
+  const { data, content } = matter.read(filePath)
+
+  // コンテンツを描画するコンポーネントを作成
+  const code = String(
+    await compile(content, {
+      outputFormat: 'function-body',
+      remarkPlugins: [[remarkGfm]],
+      rehypePlugins: [[rehypePrettyCode, { theme: 'dark-plus' }]], // VSCodeのデフォルトテーマを設定
+    }),
+  )
+  const { default: MDXContent } = await run(code, {
+    ...runtime,
+    baseUrl: import.meta.url,
+  })
+
+  // descriptionを作成
+  const description = content.substring(0, 160)
+
+  return (
+    <div>
+      {/* json-ldの設定 */}
+      <Script
+        id="article-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            description,
+          }),
+        }}
+      />
+      <article>
+        {/* @tailwindcss/typographyを適用するためのclassName（prose）を設定 */}
+        <div className="prose">
+          <MDXContent />
+        </div>
+      </article>
+    </div>
+  )
+}
+```
+
+※別途`tailwind.config.ts`のpluginsで`typography`を設定する
+
+## まとめ
+
+descriptionをfrontmatterに毎回ちゃんと書きさえすれば`@next/mdx`で全然良かったんだけど、毎回ちゃんと書く自信が全く無かったので少し複雑になった。  
+あとはそもそもjson-ld本当に必要なのかみたいな話もあるけど、まあ良い機会なので一応実装しておいた。  
+最終的に割と納得する形に落ち付けられて良かった。

@@ -13,18 +13,18 @@ export async function GET(request: Request) {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>himi.blog</title>
+    <title>blog.himi.dev</title>
     <link>${BASE_URL}</link>
-    <description>himi.blog</description>
+    <description>blog.himi.dev</description>
     <language>ja</language>
     <pubDate>${new Date(posts[0].createdAt).toUTCString()}</pubDate>
     <ttl>10</ttl>
     <image>
       <url>${BASE_URL}/logo.png</url>
-      <title>himi.blog</title>
+      <title>blog.himi.dev</title>
       <link>${BASE_URL}</link>
     </image>
-    <generator>himi.blog RSS Generator</generator>
+    <generator>blog.himi.dev RSS Generator</generator>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${fullRequestUrl}" rel="self" type="application/rss+xml" />
     ${posts

@@ -3,14 +3,6 @@ import { setupServer } from 'msw/node'
 import { HttpResponse, http } from 'msw'
 import { LinkCard } from './LinkCard'
 
-const createMockServer = (html: string) => {
-  return setupServer(
-    http.get('http://example.linkcard.ct.vrt.com', () => {
-      return HttpResponse.html(html)
-    }),
-  )
-}
-
 // normal data
 const normalTitle = 'サンプルページタイトル'
 const normalDescription = 'これはサンプルページの説明です。'
@@ -39,77 +31,77 @@ const sampleHtml = (title?: string, description?: string, image?: string, siteNa
         </html>
         `
 
-test.describe.configure({ mode: 'parallel' })
+test.describe.configure({ mode: 'serial' })
 test.describe('VRT', () => {
+  const server = setupServer()
+
+  test.beforeAll(() => {
+    server.listen()
+  })
+
+  test.afterAll(() => {
+    server.close()
+  })
+
+  const updateServerHtml = (html: string) => {
+    server.use(
+      http.get('http://example.linkcard.ct.vrt.com', () => {
+        return HttpResponse.html(html)
+      }),
+    )
+  }
+
   test.describe('全ての要素がある場合', () => {
     test('normal data', async ({ mount }) => {
       const html = sampleHtml(normalTitle, normalDescription, normalOgImage, normalSiteName)
-      const server = createMockServer(html)
-      server.listen()
+      updateServerHtml(html)
 
       const component = await mount(await LinkCard({ url: 'http://example.linkcard.ct.vrt.com' }))
 
       await expect(component).toHaveScreenshot()
-
-      server.close()
     })
     test('irregular data', async ({ mount }) => {
       const html = sampleHtml(longTitle, longDescription, squareOgImage, longSiteName)
-      const server = createMockServer(html)
-      server.listen()
+      updateServerHtml(html)
 
       const component = await mount(await LinkCard({ url: 'http://example.linkcard.ct.vrt.com' }))
 
       await expect(component).toHaveScreenshot()
-
-      server.close()
     })
   })
 
   test.describe('要素が不足している場合', () => {
     test('titleがない場合', async ({ mount }) => {
       const html = sampleHtml(undefined, normalDescription, normalOgImage, normalSiteName)
-      const server = createMockServer(html)
-      server.listen()
+      updateServerHtml(html)
 
       const component = await mount(await LinkCard({ url: 'http://example.linkcard.ct.vrt.com' }))
 
       await expect(component).toHaveScreenshot()
-
-      server.close()
     })
     test('descriptionがない場合', async ({ mount }) => {
       const html = sampleHtml(normalTitle, undefined, normalOgImage, normalSiteName)
-      const server = createMockServer(html)
-      server.listen()
+      updateServerHtml(html)
 
       const component = await mount(await LinkCard({ url: 'http://example.linkcard.ct.vrt.com' }))
 
       await expect(component).toHaveScreenshot()
-
-      server.close()
     })
     test('og:imageがない場合', async ({ mount }) => {
       const html = sampleHtml(normalTitle, normalDescription, undefined, normalSiteName)
-      const server = createMockServer(html)
-      server.listen()
+      updateServerHtml(html)
 
       const component = await mount(await LinkCard({ url: 'http://example.linkcard.ct.vrt.com' }))
 
       await expect(component).toHaveScreenshot()
-
-      server.close()
     })
     test('og:site_nameがない場合', async ({ mount }) => {
       const html = sampleHtml(normalTitle, normalDescription, normalOgImage, undefined)
-      const server = createMockServer(html)
-      server.listen()
+      updateServerHtml(html)
 
       const component = await mount(await LinkCard({ url: 'http://example.linkcard.ct.vrt.com' }))
 
       await expect(component).toHaveScreenshot()
-
-      server.close()
     })
   })
 })

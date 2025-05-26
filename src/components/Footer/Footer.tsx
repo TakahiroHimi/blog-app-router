@@ -7,7 +7,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <Link href="/" className="text-lg font-medium">
-              himi.blog
+              blog.himi.dev
             </Link>
           </div>
 
@@ -39,7 +39,7 @@ export function Footer() {
         </div>
 
         <div className="mt-6 text-center text-sm text-gray-600">
-          © {new Date().getFullYear()} himi.blog. All rights reserved.
+          © {new Date().getFullYear()} blog.himi.dev. All rights reserved.
         </div>
       </div>
     </footer>

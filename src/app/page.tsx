@@ -16,8 +16,8 @@ export default function Home() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebSite',
-            name: 'himi.blog',
-            description: 'himi.blog',
+            name: 'blog.himi.dev',
+            description: 'blog.himi.dev',
             url: BASE_URL,
             image: {
               '@type': 'ImageObject',
@@ -27,7 +27,7 @@ export default function Home() {
         }}
       />
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold mb-4">himi.blog</h1>
+        <h1 className="text-4xl font-bold mb-4">blog.himi.dev</h1>
       </div>
       <PostList posts={allPosts} />
     </div>
