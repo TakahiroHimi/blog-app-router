@@ -6,7 +6,7 @@ export function Header() {
       <div className="container mx-auto flex justify-between items-center max-w-4xl">
         <div className="flex items-center">
           <Link href="/" className="text-2xl font-bold">
-            himi.blog
+            blog.himi.dev
           </Link>
         </div>
         

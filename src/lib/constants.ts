@@ -5,10 +5,10 @@
 /**
  * ベースURL - 環境によって変わります
  * - 開発環境: http://localhost:3000
- * - 本番環境: https://himi.blog
+ * - 本番環境: https://blog.himi.dev
  */
 export const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL || (process.env.NODE_ENV === 'production' ? 'https://himi.blog' : 'http://localhost:3000')
+  process.env.NEXT_PUBLIC_BASE_URL || (process.env.NODE_ENV === 'production' ? 'https://blog.himi.dev' : 'http://localhost:3000')
 
 /**
  * 絶対URLを取得するためのヘルパー関数

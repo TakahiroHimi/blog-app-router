@@ -12,7 +12,7 @@ test.describe('Home - E2E', () => {
     await expect(page).toHaveURL('/posts/2099/01/01_markdown-test')
 
     // ヘッダーのリンクをクリックしてトップページに遷移できる
-    await page.getByRole('banner').getByRole('link', { name: 'himi.blog' }).click()
+    await page.getByRole('banner').getByRole('link', { name: 'blog.himi.dev' }).click()
     await expect(page).toHaveURL('/')
 
     // カスタムコンポーネントテスト用ページに遷移できる
@@ -20,7 +20,7 @@ test.describe('Home - E2E', () => {
     await expect(page).toHaveURL('/posts/2099/01/02_custom-component-test')
 
     // フッターのリンクをクリックしてトップページに遷移できる
-    await page.getByRole('contentinfo').getByRole('link', { name: 'himi.blog' }).click()
+    await page.getByRole('contentinfo').getByRole('link', { name: 'blog.himi.dev' }).click()
     await expect(page).toHaveURL('/')
   })
 

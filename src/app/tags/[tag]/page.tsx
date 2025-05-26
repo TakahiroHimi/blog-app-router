@@ -22,15 +22,15 @@ export async function generateMetadata({ params }: { params: PageParams }): Prom
   const decodedTag = decodeURIComponent(paramsData.tag)
 
   return {
-    title: `${decodedTag}に関する記事 | himi.blog`,
+    title: `${decodedTag}に関する記事 | blog.himi.dev`,
     description: `${decodedTag}タグが付いた記事の一覧です。`,
     openGraph: {
-      title: `${decodedTag}に関する記事 | himi.blog`,
+      title: `${decodedTag}に関する記事 | blog.himi.dev`,
       description: `${decodedTag}タグが付いた記事の一覧です。`,
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${decodedTag}に関する記事 | himi.blog`,
+      title: `${decodedTag}に関する記事 | blog.himi.dev`,
       description: `${decodedTag}タグが付いた記事の一覧です。`,
     },
   }

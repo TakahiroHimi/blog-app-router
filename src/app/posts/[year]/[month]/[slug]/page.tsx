@@ -77,7 +77,7 @@ export async function generateMetadata({ params }: { params: PageParams }): Prom
   ogImageUrl.searchParams.append('title', post.meta.title)
 
   return {
-    title: `${post.meta.title} | himi.blog`,
+    title: `${post.meta.title} | blog.himi.dev`,
     description: post.meta.description,
     openGraph: {
       title: post.meta.title,
@@ -92,7 +92,7 @@ export async function generateMetadata({ params }: { params: PageParams }): Prom
           url: ogImageUrl.toString(),
           width: 1200,
           height: 630,
-          alt: post.meta.title + ' | himi.blog',
+          alt: post.meta.title + ' | blog.himi.dev',
         },
       ],
     },
@@ -183,7 +183,7 @@ export default async function PostPage({ params }: { params: PageParams }) {
             },
             publisher: {
               '@type': 'Organization',
-              name: 'himi.blog',
+              name: 'blog.himi.dev',
               url: BASE_URL,
               sameAs: ['https://x.com/himi_himi_', 'https://github.com/TakahiroHimi'],
               logo: {

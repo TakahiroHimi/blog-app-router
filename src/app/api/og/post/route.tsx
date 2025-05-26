@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
                   borderRadius: 100,
                 }}
               />
-              <div style={{ fontSize: 32, color: '#6B7280' }}>himi.blog</div>
+              <div style={{ fontSize: 32, color: '#6B7280' }}>blog.himi.dev</div>
             </div>
           </div>
         </div>
