@@ -38,7 +38,7 @@ jobs:
             });
             core.setOutput('ref', pr.head.ref);
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ steps.pr-branch.outputs.ref }}
 
