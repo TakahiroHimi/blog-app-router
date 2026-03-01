@@ -7,7 +7,7 @@ import fs from 'fs'
 describe('getPostsByTag', () => {
   test('テストタグの記事を取得できる', () => {
     const posts = getPostsByTag('テスト')
-    expect(posts).toHaveLength(3)
+    expect(posts).toHaveLength(4)
 
     expect(posts[0].tags).toContain('テスト')
     expect(posts[1].tags).toContain('テスト')

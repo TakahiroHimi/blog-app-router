@@ -1,0 +1,99 @@
+name: Update VRT Snapshots
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  update-snapshots:
+    if: >
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, '/update-snapshots')
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      # コメントにリアクション（目）を付けて開始を通知
+      - name: Add eyes reaction
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: 'eyes',
+            });
+
+      # PRブランチ名を取得
+      - name: Get PR branch
+        id: pr-branch
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+            core.setOutput('ref', pr.head.ref);
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pr-branch.outputs.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+
+      - name: Install dependencies
+        run: npm install -g pnpm && pnpm install
+
+      - name: Build
+        run: SHOW_TEST_POSTS=true pnpm build
+
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+
+      # スナップショットを更新
+      - name: Update Snapshots
+        run: rm -rf __snapshots__ && pnpm test-e2e:vrt --update-snapshots --reporter=null && pnpm test-ct:vrt --update-snapshots --reporter=null
+
+      # 変更があればコミット＆プッシュ
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add __snapshots__/
+          if git diff --cached --quiet; then
+            echo "No snapshot changes to commit"
+          else
+            git commit -m "update VRT snapshots [skip ci]"
+            git push
+          fi
+
+      # 成功時にロケットリアクション
+      - name: Add rocket reaction on success
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: 'rocket',
+            });
+
+      # 失敗時に困惑リアクション
+      - name: Add confused reaction on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: 'confused',
+            });
