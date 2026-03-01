@@ -34,7 +34,7 @@ jobs:
           fi
       # playwright-reportをartifactsに保存
       - name: Upload Artifacts - Playwright Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always() && !cancelled()
         with:
           name: playwright-report
@@ -58,7 +58,7 @@ jobs:
         run: rm -rf __snapshots__ && pnpm test-e2e:vrt --update-snapshots --reporter=null && pnpm test-ct:vrt --update-snapshots --reporter=null
       # actual snapshots をartifactsに保存
       - name: Upload Artifacts - Actual Snapshots
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always() && !cancelled()
         with:
           name: actual-snapshots
