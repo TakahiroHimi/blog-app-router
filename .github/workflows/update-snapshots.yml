@@ -12,6 +12,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      actions: write
     steps:
       # コメントにリアクション（目）を付けて開始を通知
       - name: Add eyes reaction
@@ -71,6 +72,22 @@ jobs:
             git commit -m "update VRT snapshots"
             git push
           fi
+
+      # CIワークフローをトリガー（GITHUB_TOKENによるpushは他ワークフローをトリガーしないため）
+      - name: Trigger CI workflows
+        if: success()
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const ref = '${{ steps.pr-branch.outputs.ref }}';
+            for (const workflow of ['playwright.yml', 'vitest.yml']) {
+              await github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: workflow,
+                ref: ref,
+              });
+            }
 
       # 成功時にロケットリアクション
       - name: Add rocket reaction on success
