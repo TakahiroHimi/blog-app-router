@@ -68,7 +68,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No snapshot changes to commit"
           else
-            git commit -m "update VRT snapshots [skip ci]"
+            git commit -m "update VRT snapshots"
             git push
           fi
 
