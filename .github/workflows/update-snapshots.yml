@@ -16,7 +16,7 @@ jobs:
     steps:
       # コメントにリアクション（目）を付けて開始を通知
       - name: Add eyes reaction
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             await github.rest.reactions.createForIssueComment({
@@ -29,7 +29,7 @@ jobs:
       # PRブランチ名を取得
       - name: Get PR branch
         id: pr-branch
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const { data: pr } = await github.rest.pulls.get({
@@ -76,7 +76,7 @@ jobs:
       # CIワークフローをトリガー（GITHUB_TOKENによるpushは他ワークフローをトリガーしないため）
       - name: Trigger CI workflows
         if: success()
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const ref = '${{ steps.pr-branch.outputs.ref }}';
@@ -92,7 +92,7 @@ jobs:
       # 成功時にロケットリアクション
       - name: Add rocket reaction on success
         if: success()
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             await github.rest.reactions.createForIssueComment({
@@ -105,7 +105,7 @@ jobs:
       # 失敗時に困惑リアクション
       - name: Add confused reaction on failure
         if: failure()
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             await github.rest.reactions.createForIssueComment({
