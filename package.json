@@ -29,7 +29,7 @@
     "@types/mdx": "^2.0.13",
     "cheerio": "^1.0.0",
     "gray-matter": "^4.0.3",
-    "next": "16.1.7",
+    "next": "16.2.3",
     "react": "^19.0.0",
     "react-aria-components": "^1.8.0",
     "react-dom": "^19.0.0",
