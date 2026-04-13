@@ -48,7 +48,7 @@ jobs:
         run: cp .github/github-pages-index.html playwright-report/index.html
       # GitHub Pages用のartifactsを保存
       - name: Upload Artifacts - Pages Artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         if: always() && !cancelled()
         with:
           path: playwright-report/
